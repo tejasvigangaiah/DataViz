@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+  </head>
+  <body>
+    <div id="viz"></div>
+    <script>
+
+function name(d) { return d.name; }
+function group(d) { return d.group; }
+
+var w = document.getElementById('viz').offsetWidth-60, h = 700, p = 10;
+var circle;
+var svg = d3.select('#viz')
+    .append('svg')
+    .attr("width", w + p * 2)
+    .attr("height", h + p * 2)
+    .style("stroke-width", 5)
+    .append("g")
+    .attr("transform", "translate(" + p + "," + p + ")");
+
+function dragstart(d) {
+
+}
+
+function dragmove(d) {
+
+  var movement_x = Number(circle.attr("cx")) + d3.event.dx;
+  var movement_y = Number(circle.attr("cy")) + d3.event.dy;
+  circle.attr("cx", movement_x);
+  circle.attr("cy", movement_y);
+}
+
+function dragend(d) {
+
+}
+
+      var drag = d3.behavior.drag()
+        .on("drag", dragmove)
+        .on("dragstart", dragstart)
+        .on("dragend", dragend);
+
+      circle = svg.append("circle")
+        .attr("r", 20)
+        .attr("cx", 50)
+        .attr("cy", 50)
+        .call(drag);
+    </script>
+  </body>
+</html>    
