@@ -5,46 +5,41 @@
   <body>
     <div id="viz"></div>
     <script>
-
-function name(d) { return d.name; }
-function group(d) { return d.group; }
-
-var w = document.getElementById('viz').offsetWidth-60, h = 700, p = 10;
+var w = document.getElementById('viz').offsetWidth-30, h = 640;
 var circle;
 var svg = d3.select('#viz')
     .append('svg')
-    .attr("width", w + p * 2)
-    .attr("height", h + p * 2)
-    .style("stroke-width", 5)
-    .append("g")
-    .attr("transform", "translate(" + p + "," + p + ")");
+    .attr("width", w)
+    .attr("height", h);
+
+var borderPath = svg.append("rect").attr("x", 0).attr("y", 0).attr("height", h).attr("width", w).style("stroke", "black").style("fill", "none").style("stroke-width", 1);
+var splitLine = svg.append("line").attr("x1",0).attr("y1",150).attr("x2",w).attr("y2",150).style("stroke", "black").style("stroke-width", 1);
 
 function dragstart(d) {
-
 }
-
 function dragmove(d) {
-
   var movement_x = Number(circle.attr("cx")) + d3.event.dx;
   var movement_y = Number(circle.attr("cy")) + d3.event.dy;
-  circle.attr("cx", movement_x);
-  circle.attr("cy", movement_y);
+  if(movement_x < w-20 && movement_x > 20) {
+    circle.attr("cx", movement_x);
+  }
+  if(movement_y < h-20 && movement_y > 20) {
+    circle.attr("cy", movement_y);
+  }
 }
-
 function dragend(d) {
-
 }
 
-      var drag = d3.behavior.drag()
-        .on("drag", dragmove)
-        .on("dragstart", dragstart)
-        .on("dragend", dragend);
+var drag = d3.behavior.drag()
+  .on("drag", dragmove)
+  .on("dragstart", dragstart)
+  .on("dragend", dragend);
+circle = svg.append("circle")
+  .attr("r", 20)
+  .attr("cx", 50)
+  .attr("cy", 50)
+  .call(drag);
 
-      circle = svg.append("circle")
-        .attr("r", 20)
-        .attr("cx", 50)
-        .attr("cy", 50)
-        .call(drag);
     </script>
   </body>
 </html>    
