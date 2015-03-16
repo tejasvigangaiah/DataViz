@@ -1,44 +1,103 @@
 <html>
   <head>
     <script src="http://d3js.org/d3.v3.min.js"></script>
+    <style>
+
+.node {
+  opacity: 0.5;
+}
+
+.node:hover {
+  opacity: 1;
+}
+.link {
+  stroke: #999;
+  stroke-opacity: 0.3;
+}
+    </style>
+
   </head>
   <body>
+    <p id="count"></p>
     <div id="viz"></div>
     <script>
-var w = document.getElementById('viz').offsetWidth-30, h = 640;
-var circle;
+var width = document.getElementById('viz').offsetWidth-30, height = 640;
+var chosenCount = 0;
 var svg = d3.select('#viz')
     .append('svg')
-    .attr("width", w)
-    .attr("height", h);
+    .attr("width", width)
+    .attr("height", height);
 
-var borderPath = svg.append("rect").attr("x", 0).attr("y", 0).attr("height", h).attr("width", w).style("stroke", "black").style("fill", "none").style("stroke-width", 1);
-var splitLine = svg.append("line").attr("x1",0).attr("y1",150).attr("x2",w).attr("y2",150).style("stroke", "black").style("stroke-width", 1);
+var borderPath = svg.append("rect").attr("x", 0).attr("y", 0).attr("height", height).attr("width", width).style("stroke", "black").style("fill", "none").style("stroke-width", 1);
+var splitLine = svg.append("line").attr("x1",0).attr("y1",150).attr("x2",width).attr("y2",150).style("stroke", "black").style("stroke-width", 1);
 
 function dragstart(d) {
+  if(Number(d3.select(this).attr("cy")) > 150){
+    chosenCount--;
+  }
 }
 function dragmove(d) {
-  var movement_x = Number(circle.attr("cx")) + d3.event.dx;
-  var movement_y = Number(circle.attr("cy")) + d3.event.dy;
-  if(movement_x < w-20 && movement_x > 20) {
-    circle.attr("cx", movement_x);
+  var movement_x = Number(d3.select(this).attr("cx")) + d3.event.dx;
+  var movement_y = Number(d3.select(this).attr("cy")) + d3.event.dy;
+  if(movement_x < width-20 && movement_x > 20) {
+    d3.select(this).attr("cx", movement_x);
   }
-  if(movement_y < h-20 && movement_y > 20) {
-    circle.attr("cy", movement_y);
+  if(movement_y < height-20 && movement_y > 20) {
+    d3.select(this).attr("cy", movement_y);
   }
 }
 function dragend(d) {
+  if(Number(d3.select(this).attr("cy")) < 150) {
+    d3.select(this).transition().attr("cx", 70*(d.id % 10 +1)).attr("cy", 70*(Math.floor(d.id / 10)) + 40).duration(1500);
+  } else {
+    chosenCount++;
+    //alert(chosenCount);
+    d3.select(this).transition().attr("cx", width/2).attr("cy", (height + 150)/2).duration(1500);
+  }
+  d3.select("#count").html(chosenCount+ "");
 }
 
 var drag = d3.behavior.drag()
   .on("drag", dragmove)
   .on("dragstart", dragstart)
   .on("dragend", dragend);
-circle = svg.append("circle")
+/*circle = svg.append("circle")
   .attr("r", 20)
   .attr("cx", 50)
   .attr("cy", 50)
   .call(drag);
+
+*/
+
+
+d3.json('miserables.json', function(err, data) {
+
+    data.nodes.forEach(function(d, i) {
+        d.id = i;
+    });
+
+    link = svg.selectAll('.link')
+        .data( data.links )
+        .enter().append('line')
+        .attr('class', 'link');
+
+    node = svg.selectAll('.node')
+        .data( data.nodes )
+        .enter().append('g')
+        .attr('title', name)
+        .attr('class', 'node');
+
+    node.append('circle')
+        .attr('r', 30)
+        .attr('fill-opacity', 0.5)
+        .attr('cx',function(d) { return 70*(d.id % 10 +1)})
+        .attr('cy',function(d) { return 70*(Math.floor(d.id / 10)) + 40})
+        .call(drag);
+
+});
+
+// ...
+
 
     </script>
   </body>
