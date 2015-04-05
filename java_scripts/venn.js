@@ -1,3 +1,5 @@
+var  colours = d3.scale.category10();
+
 (function(venn) {
     venn.VennDiagram = function() {
         var width = 600,
@@ -5,7 +7,7 @@
             padding = 15,
             duration = 1000,
             fontSize = null,
-            colours = d3.scale.category10(),
+
             layoutFunction = venn.venn;
 
         function chart(selection) {
@@ -332,7 +334,8 @@
         }
 
         // add most overlapped set at (0,0)
-        positionSet({x: 0, y: 0}, mostOverlapped[0].set);
+        if (mostOverlapped[0].set)
+            positionSet({x: 0, y: 0}, mostOverlapped[0].set);
 
         // get distances between all points. TODO, necessary?
         // answer: probably not

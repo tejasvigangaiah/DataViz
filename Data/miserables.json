@@ -1,0 +1,28 @@
+{
+  "nodes":[
+    {"sets": [0], "label":"Burgers",
+      "size":5000},
+    {"sets": [1], "label":"Italian",
+      "size":5000},
+    {"sets": [2], "label":"Indian",
+      "size":5000},
+    {"sets": [3], "label":"Chinesse",
+      "size":5000},
+    {"sets": [4], "label":"Japanese",
+      "size":5000},
+    {"sets": [5], "label":"Pizza",
+      "size":5000},
+    {"sets": [6], "label":"Steaks",
+      "size":5000},
+    {"sets": [7], "label":"Middle Eastern",
+      "size":5000},
+    {"sets": [8], "label":"Thai",
+      "size":5000},
+    {"sets": [9], "label":"French",
+      "size":5000},
+    {"sets": [10], "label":"Greek",
+      "size":5000},
+    {"sets": [11], "label":"Mexican",
+      "size":5000}
+  ]
+}
