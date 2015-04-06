@@ -1,4 +1,3 @@
-var  colours = d3.scale.category10();
 
 (function(venn) {
     venn.VennDiagram = function() {
@@ -7,7 +6,6 @@ var  colours = d3.scale.category10();
             padding = 15,
             duration = 1000,
             fontSize = null,
-
             layoutFunction = venn.venn;
 
         function chart(selection) {
@@ -71,11 +69,11 @@ var  colours = d3.scale.category10();
                 enter.append("path")
                     .style("fill-opacity", "0")
                     .filter(function (d) { return d.sets.length == 1; } )
-                    .style("fill", function(d) { return colours(label(d)); })
+                    .style("fill", function(d) { return d.color;})
                     .style("fill-opacity", ".25");
 
                 var enterText = enter.append("text")
-                    .style("fill", function(d) { return d.sets.length == 1 ? colours(label(d)) : "#444"; })
+                    .style("fill", function(d) { return d.sets.length == 1 ? d.color : "#444"; })
                     .text(function (d) { return label(d); } )
                     .attr("text-anchor", "middle")
                     .attr("dy", ".35em")
@@ -334,7 +332,7 @@ var  colours = d3.scale.category10();
         }
 
         // add most overlapped set at (0,0)
-        if (mostOverlapped[0].set)
+        if (mostOverlapped[0] && mostOverlapped[0].set)
             positionSet({x: 0, y: 0}, mostOverlapped[0].set);
 
         // get distances between all points. TODO, necessary?
@@ -1067,4 +1065,6 @@ var  colours = d3.scale.category10();
         center.y /= points.length;
         return center;
     };
+
+
 }(window.venn = window.venn || {}));

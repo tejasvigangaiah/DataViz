@@ -1,6 +1,8 @@
 /**
  * Created by kpbhatt on 3/15/2015.
  */
+//startDrawingVenn();
+
 function startDrawingVenn() {
     var chart = venn.VennDiagram()
         .width(500)
@@ -9,13 +11,20 @@ function startDrawingVenn() {
     var div = d3.select("#venn")
     div.datum(sets).call(chart);
 
+    var drag = d3.behavior.drag()
+        .on("drag", dragmove)
+        .on("dragstart", dragstart)
+        .on("dragend", dragend);
+
     var tooltip = d3.select("body").append("div")
         .attr("class", "venntooltip");
 
     div.selectAll("path")
         .style("stroke-opacity", 0)
         .style("stroke", "#fff")
-        .style("stroke-width", 0)
+        .style("stroke-width", 0);
+
+    div.call(drag);
 
     div.selectAll("g")
         .on("mouseover", function (d, i) {
@@ -47,4 +56,20 @@ function startDrawingVenn() {
                 .style("fill-opacity", d.sets.length == 1 ? .25 : .0)
                 .style("stroke-opacity", 0);
         });
+
+    function dragmove(d) {
+       // console.log("DRAG MOVE");
+        //console.log(d);
+        console.log(d3.select(this));
+        console.log(d3.select(this)[0]);
+        console.log(d3.select(this)[0][0]);
+    }
+
+    function dragstart(d) {
+        //console.log("DRAG START");
+    }
+
+    function dragend(d) {
+       // console.log("DRAG END");
+    }
 }

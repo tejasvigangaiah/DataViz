@@ -1,0 +1,61 @@
+#svg-container {
+    width: 1400px;
+    height: 800px;
+    border: dashed 1px black;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1000;
+}
+
+#svg-container svg {
+    top: 0;
+    left: 0;
+    position: relative;
+    border: dotted 2px green;
+}
+
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    background-color: beige;
+}
+
+.venntooltip {
+    position: absolute;
+    text-align: center;
+    width: 128px;
+    height: 16px;
+    background: #333;
+    color: #ddd;
+    padding: 2px;
+    border: 0px;
+    border-radius: 8px;
+    opacity: 0;
+}
+
+#venn {
+    width: 600px;
+    height: 600px;
+    border: dashed 1px black;
+
+    margin-top: -650px;
+    margin-left: 375px;
+
+    overflow: visible;
+    position: relative;
+    color:#FFFFFF;
+
+    padding:20px
+}
+
+#venn span {
+    position: relative;
+    top: 15px;
+}
+.this {
+    width:560px;
+    height:460px;
+    color:#FFFFFF;
+    padding:20px;
+    background-image: url("http://www.tshirtvortex.net/wp-content/uploads/dramaticchipmunk.jpg");
+}
