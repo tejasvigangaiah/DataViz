@@ -1,11 +1,11 @@
 #svg-container {
-    width: 1400px;
-    height: 800px;
-    border: dashed 1px black;
-    margin-left: auto;
-    margin-right: auto;
-    z-index: 1000;
-}
+     width: 1400px;
+     height: 800px;
+     border: dashed 1px black;
+     margin-left: auto;
+     margin-right: auto;
+     z-index: 1000;
+ }
 
 #svg-container svg {
     top: 0;
@@ -37,14 +37,11 @@ body {
     width: 600px;
     height: 600px;
     border: dashed 1px black;
-
     margin-top: -650px;
     margin-left: 375px;
-
     overflow: visible;
     position: relative;
     color:#FFFFFF;
-
     padding:20px
 }
 
@@ -52,6 +49,7 @@ body {
     position: relative;
     top: 15px;
 }
+
 .this {
     width:560px;
     height:460px;

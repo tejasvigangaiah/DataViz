@@ -11,11 +11,6 @@ function startDrawingVenn() {
     var div = d3.select("#venn")
     div.datum(sets).call(chart);
 
-    var drag = d3.behavior.drag()
-        .on("drag", dragmove)
-        .on("dragstart", dragstart)
-        .on("dragend", dragend);
-
     var tooltip = d3.select("body").append("div")
         .attr("class", "venntooltip");
 
@@ -23,8 +18,6 @@ function startDrawingVenn() {
         .style("stroke-opacity", 0)
         .style("stroke", "#fff")
         .style("stroke-width", 0);
-
-    div.call(drag);
 
     div.selectAll("g")
         .on("mouseover", function (d, i) {
@@ -57,19 +50,4 @@ function startDrawingVenn() {
                 .style("stroke-opacity", 0);
         });
 
-    function dragmove(d) {
-       // console.log("DRAG MOVE");
-        //console.log(d);
-        console.log(d3.select(this));
-        console.log(d3.select(this)[0]);
-        console.log(d3.select(this)[0][0]);
-    }
-
-    function dragstart(d) {
-        //console.log("DRAG START");
-    }
-
-    function dragend(d) {
-       // console.log("DRAG END");
-    }
 }
