@@ -10,7 +10,7 @@ var foodJson = [
     {sets: [8], label:"Italian", initX: 0, initY: 0, size: 3000, color: "#fff"},
     {sets: [9], label:"Japanese", initX: 0, initY: 0, size: 3000, color: "#fff"},
     {sets: [10], label:"Mexican", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [11], label:"Middle Easter", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [11], label:"Middle Eastern", initX: 0, initY: 0, size: 3000, color: "#fff"},
     {sets: [12], label:"Pizza", initX: 0, initY: 0, size: 3000, color: "#fff"},
     {sets: [13], label:"Steaks", initX: 0, initY: 0, size: 3000, color: "#fff"},
     {sets: [14], label:"Thai", initX: 0, initY: 0, size: 3000, color: "#fff"}];
@@ -19,7 +19,7 @@ var w = window.innerWidth*0.68*0.95;
 var h = 800;
 var bubbleHeight = 150;
 var chosenCount = 0;
-var slots = [0,0,0,0];
+var slots = [-1,-1,-1,-1];
 
 var svgContainer = d3.select("#svg-container")
     .style("height", h+"px");
@@ -32,38 +32,38 @@ var svg = d3.select("#svg-container").append("svg")
 var bubbleSplitLine = svg.append("line")
     .attr("x1",0)
     .attr("y1",bubbleHeight)
-    .attr("x2",w)
+    .attr("x2",950)
     .attr("y2",bubbleHeight)
     .style("stroke", "red")
     .style("stroke-width", 1);
 
 svg.append("text")
-    .attr("x", 33)
-    .attr("y", 175)
-    .style("font-size", 20)
-    .style("text-decoration","underline")
-    .text("Selected");
-
-svg.append("text")
-    .attr("x", 25)
-    .attr("y", 195)
-    .style("font-size", 20)
-    .style("text-decoration","underline")
-    .text("Categories");
-
-svg.append("text")
-    .attr("x", 833)
+    .attr("x", 55)
     .attr("y", 175)
     .style("font-size", 20)
     .style("text-decoration","underline")
     .text("Select");
 
 svg.append("text")
-    .attr("x", 825)
+    .attr("x", 47)
     .attr("y", 195)
     .style("font-size", 20)
     .style("text-decoration","underline")
     .text("Location");
+
+svg.append("text")
+    .attr("x", 820)
+    .attr("y", 175)
+    .style("font-size", 20)
+    .style("text-decoration","underline")
+    .text("Selected");
+
+svg.append("text")
+    .attr("x", 812)
+    .attr("y", 195)
+    .style("font-size", 20)
+    .style("text-decoration","underline")
+    .text("Categories");
 
 var drag = d3.behavior.drag()
     .on("drag", dragmove)
@@ -91,65 +91,19 @@ function drawBubbles(data) {
         .attr("cx", function(d, i) {d.initX = getCx(d,i); return d.initX;})
         .attr("cy", function (d, i) {d.initY = getCy(d,i); return d.initY})
         .style("fill", function(d,i) {d.color = colVals(i); return d.color;}) // #1f77b4
-        .style("opacity",0.5)
-        .on("mouseover", function(d,i) {return activateBubble(d,i);})
-        .on("mouseout", function(d,i) {return deactivateBubble(d,i);});
+        .style("opacity",0.7);
 
 
     bubbleObj.append("text")
         .attr("class", "topBubbleText")
         .attr("x", function(d, i) {return getCx(d,i);})
         .attr("y", function (d, i) {return getCy(d,i);})
-        .style("fill", function(d,i) {d.color = colVals(i); return d.color;}) // #1f77b4
+        .style("fill", "black")//function(d,i) {d.color = colVals(i); return d.color;}) // #1f77b4
         .attr("font-size", 10)
         .attr("text-anchor", "middle")
         .attr("dominant-baseline", "middle")
         .attr("alignment-baseline", "middle")
-        .text(function(d) {return d.label})
-        .on("mouseover", function(d,i) {return activateBubble(d,i);});
-}
-
-function activateBubble(d,i) {
-
-    // increase this bubble and decrease others
-    if (!isDragInProgress && indexOfVennArray(d) < 0 && indexOfFoodArray(d) >= 0) {
-        var t = svg.transition()
-            .duration(d3.event.altKey ? 7500 : 350);
-
-        t.selectAll(".topBubble")
-            .attr("r", function (d, ii) {
-                if (i == ii)
-                    return oR * 1.8;
-                else
-                    return oR;
-            });
-
-        t.selectAll(".topBubbleText")
-            .attr("font-size", function (d, ii) {
-                if (i == ii)
-                    return 10 * 1.5;
-                else
-                    return 10;
-            });
-    }
-
-}
-
-function deactivateBubble(d,i) {
-    // increase this bubble and decrease others
-        var t = svg.transition()
-            .duration(d3.event.altKey ? 7500 : 350);
-
-        t.selectAll(".topBubble")
-            .attr("r", function (d, ii) {
-                return oR;
-            });
-
-        t.selectAll(".topBubbleText")
-            .attr("font-size", function (d, ii) {
-                return 10;
-            });
-
+        .text(function(d) {return d.label});
 }
 
 function printJSONS() {
@@ -200,17 +154,16 @@ function dragend(d) {
                     .duration(400);
             } else {
                 foodJson.splice(index, 1);
-                deactivateBubble(d, 0);
                 isDragInProgress = false;
                 var indexEmpty = -1;
                 d3.select(this).selectAll("circle").transition()
-                    .attr("cx", 75)
+                    .attr("cx", 860)
                     .attr("cy", function() { indexEmpty = getEmptySlotIndex(d); return 250 + (indexEmpty * 75);})
                     .duration(400)
                     .each('start', function () {
                     });
                 d3.select(this).selectAll("text").transition()
-                    .attr("x", 75)
+                    .attr("x", 860)
                     .attr("y", function() { return 250 + (indexEmpty * 75);})
                     .duration(400);
 
@@ -219,13 +172,13 @@ function dragend(d) {
             }
         } else {
             d3.select(this).selectAll("circle").transition()
-                .attr("cx", 75)
+                .attr("cx", 860)
                 .attr("cy", startY)
                 .duration(400)
                 .each('start', function () {
                 });
             d3.select(this).selectAll("text").transition()
-                .attr("x", 75)
+                .attr("x", 860)
                 .attr("y", startY)
                 .duration(400);
             startX = 0;
@@ -278,7 +231,7 @@ function getCy(d, i) {
 }
 
 function getCx(d, i) {
-    return oR*(3*(1.5+(i/2))-1);
+    return oR*(3*(1.75+(i/2))-1);
 }
 
 var combine = function(a, min) {
@@ -339,7 +292,7 @@ function addElementToVenSet(d) {
 function getEmptySlotIndex(d) {
 
     for (var i = 0; i < slots.length; i++) {
-        if (slots[i] == 0) {
+        if (slots[i] == -1) {
             slots[i] = d.sets[0];
             return i;
         }
@@ -358,16 +311,19 @@ function printSlots() {
 function setEmptySlotIndex(d) {
     for (var i = 0; i < slots.length; i++) {
         if (slots[i] == d.sets[0]) {
-            slots[i] = 0;
+            slots[i] = -1;
         }
 
     }
 }
 
-function selectLocation() {
-    alert("SELECTED");
-}
-
 function selectLocation(selectedItem) {
-    document.getElementById(selectedItem).style.color = "blue";
+    document.getElementById(selectedItem).style.backgroundColor = "#808080";
+    var listItem = document.getElementsByClassName("list1");
+
+    for (var i=0; i < listItem.length; i++) {
+        if (listItem[i].innerHTML != selectedItem && document.getElementById(listItem[i].innerHTML).style.backgroundColor) {
+            document.getElementById(listItem[i].innerHTML).style.backgroundColor = "#FFE4C4";
+        }
+    }
 }

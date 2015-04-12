@@ -1,5 +1,5 @@
 #svg-container {
-     width: 1400px;
+     width: 950px;
      height: 800px;
      border: dashed 1px black;
      margin-left: auto;
@@ -7,12 +7,7 @@
      z-index: 1000;
  }
 
-#svg-container svg {
-    top: 0;
-    left: 0;
-    position: relative;
-    border: dotted 2px green;
-}
+
 
 body {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -60,7 +55,6 @@ z-index: 999;
     padding: 10px;
     position: absolute;
     zoom: 1;
-    left: 1020px;
     top: 225px;
     z-index: 2000;
 }
@@ -68,7 +62,7 @@ z-index: 999;
 #play ul {
     border: 1px solid black;
     margin: 1px;
-    width: 144px;
+    width: 148px;
     height: 511px;
     float: left;
     padding: 0;

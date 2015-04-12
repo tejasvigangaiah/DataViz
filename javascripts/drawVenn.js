@@ -2,8 +2,12 @@
  * Created by kpbhatt on 3/15/2015.
  */
 //startDrawingVenn();
+var tooltip;
 
 function startDrawingVenn() {
+    if (tooltip !=  null)
+        tooltip.remove();
+
     var chart = venn.VennDiagram()
         .width(500)
         .height(500);
@@ -11,7 +15,9 @@ function startDrawingVenn() {
     var div = d3.select("#venn")
     div.datum(sets).call(chart);
 
-    var tooltip = d3.select("body").append("div")
+
+
+    tooltip = d3.select("body").append("div")
         .attr("class", "venntooltip");
 
     div.selectAll("path")
@@ -49,5 +55,4 @@ function startDrawingVenn() {
                 .style("fill-opacity", d.sets.length == 1 ? .25 : .0)
                 .style("stroke-opacity", 0);
         });
-
 }
