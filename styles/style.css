@@ -38,11 +38,13 @@ body {
     height: 600px;
     border: dashed 1px black;
     margin-top: -650px;
-    margin-left: 375px;
+    margin-left: auto;
+    margin-right: auto;
     overflow: visible;
     position: relative;
     color:#FFFFFF;
     padding:20px
+z-index: 999;
 }
 
 #venn span {
@@ -50,10 +52,40 @@ body {
     top: 15px;
 }
 
-.this {
-    width:560px;
-    height:460px;
-    color:#FFFFFF;
-    padding:20px;
-    background-image: url("http://www.tshirtvortex.net/wp-content/uploads/dramaticchipmunk.jpg");
+.yui3-dd-proxy {
+    text-align: left;
+}
+#play {
+    border: 1px solid black;
+    padding: 10px;
+    position: absolute;
+    zoom: 1;
+    left: 1020px;
+    top: 225px;
+    z-index: 2000;
+}
+#play:after { display: block; clear: both; visibility: hidden; content: '.'; height: 0;}
+#play ul {
+    border: 1px solid black;
+    margin: 1px;
+    width: 144px;
+    height: 511px;
+    float: left;
+    padding: 0;
+    zoom: 1;
+    position: relative;
+    overflow: auto;
+}
+#play ul li {
+    background-image: none;
+    list-style-type: none;
+    padding: 5px;
+    margin: 2px;
+    cursor: pointer;
+    zoom: 1;
+    position: relative;
+}
+#play ul li.list1 {
+    background-color: #FFE4C4;
+    border:1px solid #004C6D;
 }

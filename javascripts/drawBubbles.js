@@ -37,6 +37,34 @@ var bubbleSplitLine = svg.append("line")
     .style("stroke", "red")
     .style("stroke-width", 1);
 
+svg.append("text")
+    .attr("x", 33)
+    .attr("y", 175)
+    .style("font-size", 20)
+    .style("text-decoration","underline")
+    .text("Selected");
+
+svg.append("text")
+    .attr("x", 25)
+    .attr("y", 195)
+    .style("font-size", 20)
+    .style("text-decoration","underline")
+    .text("Categories");
+
+svg.append("text")
+    .attr("x", 833)
+    .attr("y", 175)
+    .style("font-size", 20)
+    .style("text-decoration","underline")
+    .text("Select");
+
+svg.append("text")
+    .attr("x", 825)
+    .attr("y", 195)
+    .style("font-size", 20)
+    .style("text-decoration","underline")
+    .text("Location");
+
 var drag = d3.behavior.drag()
     .on("drag", dragmove)
     .on("dragstart", dragstart)
@@ -176,13 +204,13 @@ function dragend(d) {
                 isDragInProgress = false;
                 var indexEmpty = -1;
                 d3.select(this).selectAll("circle").transition()
-                    .attr("cx", 60)
+                    .attr("cx", 75)
                     .attr("cy", function() { indexEmpty = getEmptySlotIndex(d); return 250 + (indexEmpty * 75);})
                     .duration(400)
                     .each('start', function () {
                     });
                 d3.select(this).selectAll("text").transition()
-                    .attr("x", 60)
+                    .attr("x", 75)
                     .attr("y", function() { return 250 + (indexEmpty * 75);})
                     .duration(400);
 
@@ -191,13 +219,13 @@ function dragend(d) {
             }
         } else {
             d3.select(this).selectAll("circle").transition()
-                .attr("cx", 60)
+                .attr("cx", 75)
                 .attr("cy", startY)
                 .duration(400)
                 .each('start', function () {
                 });
             d3.select(this).selectAll("text").transition()
-                .attr("x", 60)
+                .attr("x", 75)
                 .attr("y", startY)
                 .duration(400);
             startX = 0;
@@ -334,4 +362,12 @@ function setEmptySlotIndex(d) {
         }
 
     }
+}
+
+function selectLocation() {
+    alert("SELECTED");
+}
+
+function selectLocation(selectedItem) {
+    document.getElementById(selectedItem).style.color = "blue";
 }
