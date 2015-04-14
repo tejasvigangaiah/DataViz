@@ -1,6 +1,6 @@
 #svg-container {
      width: 950px;
-     height: 800px;
+     height: 562px;
      border: dashed 1px black;
      margin-left: auto;
      margin-right: auto;
@@ -30,9 +30,9 @@ body {
 
 #venn {
     width: 600px;
-    height: 600px;
+    height: 410px;
     border: dashed 1px black;
-    margin-top: -650px;
+    margin-top: -412px;
     margin-left: auto;
     margin-right: auto;
     overflow: visible;
@@ -63,7 +63,7 @@ z-index: 999;
     border: 1px solid black;
     margin: 1px;
     width: 148px;
-    height: 511px;
+    height: 320px;
     float: left;
     padding: 0;
     zoom: 1;

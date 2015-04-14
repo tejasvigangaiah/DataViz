@@ -16,7 +16,7 @@ var foodJson = [
     {sets: [14], label:"Thai", initX: 0, initY: 0, size: 3000, color: "#fff"}];
 
 var w = window.innerWidth*0.68*0.95;
-var h = 800;
+var h = 562;
 var bubbleHeight = 150;
 var chosenCount = 0;
 var slots = [-1,-1,-1,-1];
@@ -304,9 +304,6 @@ function getEmptySlotIndex(d) {
 
 function printSlots() {
     console.log(slots.toString());
-    //for (var i = 0; i < slots.length; i++) {
-    //    console.log(slots[i]);
-    //}
 }
 
 function setEmptySlotIndex(d) {
@@ -314,19 +311,18 @@ function setEmptySlotIndex(d) {
         if (slots[i] == d.sets[0]) {
             slots[i] = -1;
         }
-
     }
 }
 
-function selectLocation(selectedItem) {
-    document.getElementById(selectedItem).style.backgroundColor = "#808080";
-    var listItem = document.getElementsByClassName("list1");
+var lastSelectedItemId;
 
-    for (var i=0; i < listItem.length; i++) {
-        if (listItem[i].innerHTML != selectedItem && document.getElementById(listItem[i].innerHTML).style.backgroundColor) {
-            document.getElementById(listItem[i].innerHTML).style.backgroundColor = "#FFE4C4";
-        }
-    }
+function selectLocation(selectedItem) {
+
+    if (lastSelectedItemId && lastSelectedItemId != selectedItem)
+        document.getElementById(lastSelectedItemId).style.backgroundColor = "#FFE4C4";
+    document.getElementById(selectedItem).style.backgroundColor = "#808080";
+    lastSelectedItemId = selectedItem;
+
 }
 
 function parseURLParams(url) {

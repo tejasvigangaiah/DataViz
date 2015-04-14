@@ -10,7 +10,7 @@ function startDrawingVenn() {
 
     var chart = venn.VennDiagram()
         .width(500)
-        .height(500);
+        .height(410);
 
     var div = d3.select("#venn")
     div.datum(sets).call(chart);
