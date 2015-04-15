@@ -315,13 +315,14 @@ function setEmptySlotIndex(d) {
 }
 
 var lastSelectedItemId;
-
+var selectedLocation = "";
 function selectLocation(selectedItem) {
 
     if (lastSelectedItemId && lastSelectedItemId != selectedItem)
         document.getElementById(lastSelectedItemId).style.backgroundColor = "#FFE4C4";
     document.getElementById(selectedItem).style.backgroundColor = "#808080";
     lastSelectedItemId = selectedItem;
+    selectedLocation = document.getElementById(selectedItem).id;
 
 }
 
@@ -348,4 +349,40 @@ function parseURLParams(url) {
         parms[n].push(nv.length === 2 ? v : null);
     }
     return parms.attributes[0];
+}
+
+function getRestaurantList(cuisines) {
+
+    if (cuisines == null || cuisines == "") {
+        alert("Select cuisines");
+        return;
+    }
+
+    if (selectedLocation == null || selectedLocation == "") {
+        alert("Select a location");
+        return;
+    }
+
+    if (indexAttributes == null || indexAttributes == "") {
+        alert("Go back to home page and select attributes");
+        return;
+    }
+    console.log(cuisines);
+    console.log(selectedLocation);
+    console.log(indexAttributes);
+    var link = "https://yelp-reco-dv.herokuapp.com/recommend?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + indexAttributes;
+    httpGet(link);
+}
+
+function httpGet(theUrl)
+{
+    var xmlHttp = null;
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", theUrl, true ); // I tried with true and with false
+    xmlHttp.send();
+    var answer= xmlHttp.responseText;
+    var str = JSON.stringify(answer);
+    console.log(str);
+    var jsonResponse = JSON.parse(str);
+    console.log(jsonResponse);
 }

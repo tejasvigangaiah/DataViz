@@ -18,10 +18,10 @@ body {
 .venntooltip {
     position: absolute;
     text-align: center;
-    width: 128px;
+    width: 200px;
     height: 16px;
     background: #333;
-    color: #ddd;
+    color: #fff;
     padding: 2px;
     border: 0px;
     border-radius: 8px;
@@ -82,4 +82,18 @@ z-index: 999;
 #play ul li.list1 {
     background-color: #FFE4C4;
     border:1px solid #004C6D;
+}
+
+#donut1 {
+    width: 250px;
+    height: 250px;
+    float: right;
+    border: dashed 1px black;
+}
+
+#donut2 {
+    width: 250px;
+    height: 250px;
+    float: left;
+    border: dashed 1px black;
 }

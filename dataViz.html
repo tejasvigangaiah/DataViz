@@ -10,6 +10,8 @@
     </script>
     <script src="javascripts/drawBubbles.js"></script>
     <script src="javascripts/venn.js"></script>
+    <link href="styles/c3.css" rel="stylesheet" type="text/css">
+    <script src="javascripts/c3.min.js"></script>
 </head>
 <body>
 <div id="svg-container" align="center">
@@ -33,6 +35,67 @@
 <div id="venn" align="center">
     <script src="javascripts/drawVenn.js"></script>
 </div>
+<div>
+    <table width="100%">
+        <tr>
+            <td width="50%">
+                 <div id="donut1"></div>
+            </td>
+            <td width="50%">
+               <div id="donut2"></div>
+            </td>
+        </tr>
+    </table>
 
+    <script>
+        var average_aces = c3.generate({
+            bindto: '#donut1',
+            data: {
+                columns: [
+                    ['Positive', 9.49606299212598],
+                    ['Negative', 7.05511811023622]
+                ],
+                type : 'donut'
+
+            },
+            size: {
+                height: 250
+            },
+            donut: {
+                title: 'Reviews'
+            }
+        });
+    </script>
+
+    <script>
+        var average_aces = c3.generate({
+            bindto: '#donut2',
+            data: {
+                columns: [
+                    ['5', 5],
+                    ['4', 4],
+                    ['3', 3],
+                    ['2', 2],
+                    ['1', 1]
+                ],
+                type : 'donut',
+                colors: {
+                    5: '#04B404',
+                    4: '#1E90FF',
+                    3: '#00FFFF',
+                    2: '#FFA500',
+                    1: '#FF0000'
+                }
+            },
+            size: {
+                height: 250
+            },
+            donut: {
+                title: 'Ratings',
+                label: {     format: function (value, ratio, id) {       return d3.format('')(value);     }   }
+            }
+        });
+    </script>
+</div>
 </body>
 </html>
