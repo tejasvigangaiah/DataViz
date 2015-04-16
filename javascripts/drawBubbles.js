@@ -367,22 +367,43 @@ function getRestaurantList(cuisines) {
         alert("Go back to home page and select attributes");
         return;
     }
-    console.log(cuisines);
-    console.log(selectedLocation);
-    console.log(indexAttributes);
     var link = "https://yelp-reco-dv.herokuapp.com/recommend?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + indexAttributes;
     httpGet(link);
 }
 
-function httpGet(theUrl)
-{
-    var xmlHttp = null;
-    xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", theUrl, true ); // I tried with true and with false
-    xmlHttp.send();
-    var answer= xmlHttp.responseText;
-    var str = JSON.stringify(answer);
-    console.log(str);
-    var jsonResponse = JSON.parse(str);
-    console.log(jsonResponse);
+function createCORSRequest(method, url){
+    var xhr = new XMLHttpRequest();
+    if ("withCredentials" in xhr){
+        xhr.open(method, url, true);
+    } else if (typeof XDomainRequest != "undefined"){
+        xhr = new XDomainRequest();
+        xhr.open(method, url);
+    } else {
+        xhr = null;
+    }
+    return xhr;
 }
+
+function httpGet(link) {
+    var request = createCORSRequest("get", link);
+    if (request) {
+        request.onload = function () {
+            //do something with request.responseText
+            console.log(request.responseText)
+        };
+        request.send();
+    }
+}
+
+//function httpGet(theUrl)
+//{
+//    var xmlHttp = null;
+//    xmlHttp = new XMLHttpRequest();
+//    xmlHttp.open("GET", theUrl, true ); // I tried with true and with false
+//    xmlHttp.send();
+//    var answer= xmlHttp.responseText;
+//    var str = JSON.stringify(answer);
+//    console.log(str);
+//    var jsonResponse = JSON.parse(str);
+//    console.log(jsonResponse);
+//}
