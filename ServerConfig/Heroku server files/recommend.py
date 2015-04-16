@@ -12,11 +12,11 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 def getState(location):
 	if location == 'Phoenix':
 		return 'AZ'
-	elif location == 'Las Vegas':
+	elif location == 'LasVegas':
 		return 'NV'
 	elif location == 'Madison':
 		return 'WI'
-	elif location == 'Urbana-Champaign':
+	elif location == 'UrbanaChampaign':
 		return 'IL'
 	elif location == 'Charolette':
 		return 'NC'
