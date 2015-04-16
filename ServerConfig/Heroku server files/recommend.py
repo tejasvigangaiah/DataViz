@@ -1,10 +1,13 @@
 import os
 import json
 from flask import Flask
+from flask.ext.cors import CORS, cross_origin
 from flask import request
 import pymongo
 
 app = Flask(__name__)
+cors =  CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 def getState(location):
 	if location == 'Phoenix':
@@ -30,11 +33,14 @@ def getState(location):
 	else:
 		return ''
 
-@app.route("/", methods=['GET'])
-def hello():
-    return request.query_string
+@app.route("/")
+@cross_origin()
+def helloWorld():
+  return "HELLO WORLD"
+  #return "<!DOCTYPE html><html><head lang='en'><meta charset='UTF-8'><script src='http://d3js.org/d3.v3.min.js'></script><title>DataViz Homepage</title><style>text {font: 10px sans-serif;color: black;}#indexBubbles {width: 500px;height: 500px;border: dashed 1px black;margin-left: auto;margin-right: auto;}</style></head><body><h2 align='center'>Select Five Attributes</h2><div id='indexBubbles' align='center'><script src='javascripts/indexBubbles.js'></script></div></body></html>"
 
 @app.route("/recommend")
+@cross_origin()
 def test():
 
 	try:
