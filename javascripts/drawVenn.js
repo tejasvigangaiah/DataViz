@@ -6,21 +6,25 @@ var tooltip;
 var cuisines = "";
 
 var localfoodJson = [
-    {sets: [0], label:"Breakfast", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [1], label:"Burger", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [0], label:"Bars", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [1], label:"Irish", initX: 0, initY: 0, size: 3000, color: "#fff"},
     {sets: [2], label:"Chinese", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [3], label:"English", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [4], label:"French", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [5], label:"German", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [6], label:"Greek", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [3], label:"Italian", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [4], label:"Fast Food", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [5], label:"Pizza", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [6], label:"German", initX: 0, initY: 0, size: 3000, color: "#fff"},
     {sets: [7], label:"Indian", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [8], label:"Italian", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [9], label:"Japanese", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [10], label:"Mexican", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [11], label:"Middle Eastern", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [12], label:"Pizza", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [13], label:"Steaks", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [14], label:"Thai", initX: 0, initY: 0, size: 3000, color: "#fff"}];
+    {sets: [8], label:"Mexican", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [9], label:"Thai", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [10], label:"French", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [11], label:"Arabian", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [12], label:"Burgers", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [13], label:"Sandwiches", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [14], label:"Vegan", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [15], label:"Bakeries", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [16], label:"Japanese", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [17], label:"Nightlife", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [18], label:"Coffee & Tea", initX: 0, initY: 0, size: 3000, color: "#fff"}];
 
 function startDrawingVenn() {
     if (tooltip !=  null)

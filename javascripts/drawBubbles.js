@@ -1,19 +1,23 @@
 var foodJson = [
-    {sets: [0], label:"Breakfast", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [1], label:"Burger", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [0], label:"Bars", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [1], label:"Irish", initX: 0, initY: 0, size: 3000, color: "#fff"},
     {sets: [2], label:"Chinese", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [3], label:"English", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [4], label:"French", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [5], label:"German", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [6], label:"Greek", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [3], label:"Italian", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [4], label:"Fast Food", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [5], label:"Pizza", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [6], label:"German", initX: 0, initY: 0, size: 3000, color: "#fff"},
     {sets: [7], label:"Indian", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [8], label:"Italian", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [9], label:"Japanese", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [10], label:"Mexican", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [11], label:"Middle Eastern", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [12], label:"Pizza", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [13], label:"Steaks", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [14], label:"Thai", initX: 0, initY: 0, size: 3000, color: "#fff"}];
+    {sets: [8], label:"Mexican", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [9], label:"Thai", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [10], label:"French", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [11], label:"Arabian", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [12], label:"Burgers", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [13], label:"Sandwiches", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [14], label:"Vegan", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [15], label:"Bakeries", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [16], label:"Japanese", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [17], label:"Nightlife", initX: 0, initY: 0, size: 3000, color: "#fff"},
+    {sets: [18], label:"Coffee & Tea", initX: 0, initY: 0, size: 3000, color: "#fff"}];
 
 var w = window.innerWidth*0.68*0.95;
 var h = 562;
@@ -232,7 +236,7 @@ function getCy(d, i) {
 }
 
 function getCx(d, i) {
-    return oR*(3*(1.75+(i/2))-1);
+    return oR*(3*(0.8+(i/2))-1);
 }
 
 var combine = function(a, min) {
@@ -387,7 +391,34 @@ function httpGet(url)
         var text = xhr.responseText;
         var jsonResponse = JSON.parse(text);
         console.log(jsonResponse[0]);
+
+
+        var pos = jsonResponse[0].pos;
+        var neg = jsonResponse[0].neg;
+        if (pos == "undefined")
+            pos = 0;
+
+        if (neg == "undefined")
+            neg = 0;
+        donutPosNeg(pos, neg);
+
+        var star1 = jsonResponse[0].star1;
+        var star2 = jsonResponse[0].star2;
+        var star3 = jsonResponse[0].star3;
+        var star4 = jsonResponse[0].star4;
+        var star5 = jsonResponse[0].star5;
+
+        donutRating(star1, star2, star3, star4, star5);
+
+
+        var restaurantName = jsonResponse[0].name;
+        var restaurantaddress = jsonResponse[0].address;
+
+        document.getElementById("catList").innerHTML = "<p align='cener'><h2>" + restaurantName + "</h2><br> " + restaurantaddress + "</p>";
+        console.log(pos + ", " + neg + ", " + star1 + ", " + star2 +", " + star3 + ", " + star4 + ", " + star5);
+
     };
+
     xhr.onerror = function(e) {
         console.log(e);
     };

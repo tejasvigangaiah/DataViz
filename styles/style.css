@@ -97,3 +97,9 @@ z-index: 999;
     float: left;
     border: dashed 1px black;
 }
+
+#catList {
+    width: 250px;
+    height: 250px;
+    border: dashed 1px black;
+}

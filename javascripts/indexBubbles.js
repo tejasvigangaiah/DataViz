@@ -1,7 +1,7 @@
 var diameter = 500,
     format = d3.format(",d"),
     dataSource = 0,
-    color = d3.scale.category20(),
+   // color = d3.scale.category20(),
     attrCount = 0;
 
 var selectedAttributes = [];
@@ -27,7 +27,7 @@ var vis = svg.datum(data).selectAll(".node")
 
 
 var circles = vis.append("circle")
-    .style("fill", function(d, i) { if (d.name == "Root") return "beige"; else return color(i); })
+    .style("fill", function(d, i) { if (d.name == "Root") return "beige"; else return "#bdbdbd"; })
     .attr("cx", function(d) { return d.x; })
     .attr("cy", function(d) { return d.y; })
     .attr("r", function(d) { return d.r; });
@@ -38,7 +38,7 @@ var circleTexts = vis.append("text")
     .attr("x", function(d) { return d.x; })
     .attr("y", function(d) { return d.y; })
     .style("text-anchor", "middle")
-    .text(function(d) { return d.name });
+    .text(function(d) {  if (d.name == "Root") return ""; else return d.name });
 
 //updateVis();
 
@@ -53,6 +53,7 @@ function updateVis(d) {
         .attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; })
         .attr("r", function(d) { return d.r})
+        .style("fill", function (xD) { if (d.name == xD.name || selectedAttributes.indexOf(xD.name.toLowerCase()) >= 0) return "#62CC8E"; else  if (xD.name == "Root") return "beige"; else return "#bdbdbd";})
         .each('end',function(xD){if (attrCount == 5) { if (xD.name == d.name) window.open("dataViz.html?attributes="+selectedAttributes, "_self");}});
 
     circleTexts.transition()
@@ -66,10 +67,10 @@ function updateVis(d) {
 function getSize(xd, name) {
     // Selected node
     if (xd.name == name) {
-        var index = selectedAttributes.indexOf(xd.name);
+        var index = selectedAttributes.indexOf(xd.name.toLowerCase());
 
         if (index == -1) {
-            selectedAttributes.push(xd.name);
+            selectedAttributes.push(xd.name.toLowerCase());
             attrCount++;
             return xd.size * 3;
         } else {
@@ -78,7 +79,7 @@ function getSize(xd, name) {
             return xd.size;
         }
     } else {
-        var index = selectedAttributes.indexOf(xd.name);
+        var index = selectedAttributes.indexOf(xd.name.toLowerCase());
 
         if (index == -1) {
             return xd.size;
@@ -109,7 +110,7 @@ function getData() {
             {"name":"Flavor", "size":500},
             {"name":"Fresh", "size":500},
             {"name":"Friendly", "size":500},
-            {"name":"Growv", "size":500},
+            {"name":"Grow", "size":500},
             {"name":"Happy", "size":500},
             {"name":"Honest", "size":500},
             {"name":"Hot", "size":500},
