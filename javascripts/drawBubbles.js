@@ -367,43 +367,46 @@ function getRestaurantList(cuisines) {
         alert("Go back to home page and select attributes");
         return;
     }
-    var link = "https://yelp-reco-dv.herokuapp.com/recommend?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + indexAttributes;
+    console.log(cuisines);
+    console.log(selectedLocation);
+    console.log(indexAttributes);
+    var link = "http://yelp-reco-dv.herokuapp.com/recommend?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + indexAttributes;
     httpGet(link);
 }
 
-function createCORSRequest(method, url){
+function httpGet(url)
+{
+    var xhr = createCORSRequest('GET', url);
+    if (!xhr) {
+        alert('CORS not supported');
+        return;
+    }
+
+    // Response handlers.
+    xhr.onload = function() {
+        var text = xhr.responseText;
+        var jsonResponse = JSON.parse(text);
+        console.log(jsonResponse[0]);
+    };
+    xhr.onerror = function(e) {
+        console.log(e);
+    };
+    xhr.send();
+
+}
+
+function createCORSRequest(method, url) {
     var xhr = new XMLHttpRequest();
-    if ("withCredentials" in xhr){
+    if ("withCredentials" in xhr) {
+        // XHR for Chrome/Firefox/Opera/Safari.
         xhr.open(method, url, true);
-    } else if (typeof XDomainRequest != "undefined"){
+    } else if (typeof XDomainRequest != "undefined") {
+        // XDomainRequest for IE.
         xhr = new XDomainRequest();
         xhr.open(method, url);
     } else {
+        // CORS not supported.
         xhr = null;
     }
     return xhr;
 }
-
-function httpGet(link) {
-    var request = createCORSRequest("get", link);
-    if (request) {
-        request.onload = function () {
-            //do something with request.responseText
-            console.log(request.responseText)
-        };
-        request.send();
-    }
-}
-
-//function httpGet(theUrl)
-//{
-//    var xmlHttp = null;
-//    xmlHttp = new XMLHttpRequest();
-//    xmlHttp.open("GET", theUrl, true ); // I tried with true and with false
-//    xmlHttp.send();
-//    var answer= xmlHttp.responseText;
-//    var str = JSON.stringify(answer);
-//    console.log(str);
-//    var jsonResponse = JSON.parse(str);
-//    console.log(jsonResponse);
-//}
