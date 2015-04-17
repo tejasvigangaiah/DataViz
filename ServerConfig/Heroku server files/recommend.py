@@ -91,15 +91,20 @@ def test():
 		    recommendation[rank-1]["name"] = doc["name"]
 		    recommendation[rank-1]["rank"] = rank
 		    recommendation[rank-1]["categories"] = doc["categories"]
+		    statistics = ""
+		    for (x,y) in preference:
+		    	if(doc[x] > 0):
+		    		statistics += str(round(doc[x]*100, 2)) + "% better in '" + x + "'\n"
+		    recommendation[rank-1]["stats"] = statistics
 		    rank += 1
+
 		# Close connection
 		conn.close()
 		return json.dumps(recommendation)
+	
 	except:
 		return "Insuffecient Inputs"
-	#categories = category.split(',')
-	#return json.dumps({"location": location, "category": category})
-
+	
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)

@@ -414,7 +414,7 @@ function httpGet(url)
         var restaurantName = jsonResponse[0].name;
         var restaurantaddress = jsonResponse[0].address;
 
-        document.getElementById("catList").innerHTML = "<p align='cener'><h2>" + restaurantName + "</h2><br> " + restaurantaddress + "</p>";
+        document.getElementById("catList").innerHTML = "<p align='cener'><h2>" + restaurantName + "</h2><br> " + restaurantaddress + "<br><br><b>Stats:</b>" + jsonResponse[0].stats + "</p>";
         console.log(pos + ", " + neg + ", " + star1 + ", " + star2 +", " + star3 + ", " + star4 + ", " + star5);
 
     };
