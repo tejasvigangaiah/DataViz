@@ -31,8 +31,8 @@ function startDrawingVenn() {
         tooltip.remove();
 
     var chart = venn.VennDiagram()
-        .width(500)
-        .height(410);
+        .width(1000)
+        .height(1000);
 
     var div = d3.select("#venn")
     div.datum(sets).call(chart);

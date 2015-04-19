@@ -5,32 +5,50 @@
     <title>Data Visualization Project</title>
     <link rel="stylesheet" type="text/css" href="styles/style.css">
     <script src='http://d3js.org/d3.v3.min.js'></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script type='text/javascript' >
         var sets = [];
     </script>
-    <script src="javascripts/drawBubbles.js"></script>
+    <script src="javascripts/drawCuisineBubbles.js"></script>
     <script src="javascripts/venn.js"></script>
     <link href="styles/c3.css" rel="stylesheet" type="text/css">
     <script src="javascripts/c3.min.js"></script>
 </head>
 <body>
-<div id="svg-container" align="center">
-    <div id="play" align="center">
-        <ul id="list1">
-            <li class="list1" onmousedown="selectLocation('Phoenix');" id="Phoenix">Phoenix, AZ</li>
-            <li class="list1" onmousedown="selectLocation('Madison');" id="Madison">Madison, WI</li>
-            <li class="list1" onmousedown="selectLocation('LasVegas');" id="LasVegas">Las Vegas, NV</li>
-            <li class="list1" onmousedown="selectLocation('Pittsburgh');" id="Pittsburgh">Pittsburgh, PA</li>
-            <li class="list1" onmousedown="selectLocation('Charolette');" id="Charolette">Charolette, NC</li>
-            <li class="list1" onmousedown="selectLocation('UrbanaChampaign');" id="UrbanaChampaign">Urbana-Champaign, IL</li>
-            <li class="list1" onmousedown="selectLocation('Waterloo');" id="Waterloo">Waterloo, Canada</li>
-            <li class="list1" onmousedown="selectLocation('Montreal');" id="Montreal">Montreal, Canada</li>
-            <li class="list1" onmousedown="selectLocation('Edinburgh');" id="Edinburgh">Edinburgh, UK</li>
-            <li class="list1" onmousedown="selectLocation('Karlsruhe');" id="Karlsruhe">Karlsruhe, Germany</li>
-        </ul>
+<div class="bs-example">
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">1. Select At Most 4 Cuisines.</a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div id="cuisine-svg-container" align="center">
+                        <script src = "javascripts/drawCuisineBubbles.js"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">2. Select a Location.</a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div id="location-svg-container" align="center">
+                        <script src = "javascripts/drawLocationBubbles.js"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <script src = "javascripts/drawBubbles.js"></script>
 </div>
 <div id="venn" align="center">
     <script src="javascripts/drawVenn.js"></script>
@@ -39,19 +57,17 @@
     <table width="100%">
         <tr>
             <td width="50%">
-                 <div id="donut1"></div>
+                <div id="donut1"></div>
             </td>
             <td>
                 <div id="catList" align="center"></div>
             </td>
             <td width="50%">
-               <div id="donut2"></div>
+                <div id="donut2"></div>
             </td>
         </tr>
     </table>
-
     <script src="javascripts/posNegDonut.js"></script>
-
     <script src="javascripts/ratingDonut.js"></script>
 </div>
 </body>
