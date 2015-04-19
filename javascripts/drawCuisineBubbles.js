@@ -87,6 +87,7 @@ function handleCuisineBubbleClick(d, i) {
 
         inflateBubble(d,i);
         startDrawingVenn();
+        drawCircleOnVenn();
     }
 }
 
@@ -197,6 +198,8 @@ function parseURLParams(url) {
     return parms.attributes[0];
 }
 
+var jsonResponse;
+
 function getRestaurantList(cuisines) {
 
     if (cuisines == null || cuisines == "") {
@@ -231,33 +234,12 @@ function httpGet(url)
     // Response handlers.
     xhr.onload = function() {
         var text = xhr.responseText;
-        var jsonResponse = JSON.parse(text);
-        console.log(jsonResponse[0]);
+        jsonResponse = JSON.parse(text);
 
 
-        var pos = jsonResponse[0].pos;
-        var neg = jsonResponse[0].neg;
-        if (pos == "undefined")
-            pos = 0;
 
-        if (neg == "undefined")
-            neg = 0;
-        donutPosNeg(pos, neg);
-
-        var star1 = jsonResponse[0].star1;
-        var star2 = jsonResponse[0].star2;
-        var star3 = jsonResponse[0].star3;
-        var star4 = jsonResponse[0].star4;
-        var star5 = jsonResponse[0].star5;
-
-        donutRating(star1, star2, star3, star4, star5);
-
-
-        var restaurantName = jsonResponse[0].name;
-        var restaurantaddress = jsonResponse[0].address;
-
-        document.getElementById("catList").innerHTML = "<p align='cener'><h2>" + restaurantName + "</h2><br> " + restaurantaddress + "<br><br><b>Stats:</b>" + jsonResponse[0].stats + "</p>";
-        console.log(pos + ", " + neg + ", " + star1 + ", " + star2 +", " + star3 + ", " + star4 + ", " + star5);
+        if (jsonResponse != null)
+            drawCircleOnVenn();
 
     };
 

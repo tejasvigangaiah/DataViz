@@ -5,27 +5,6 @@ var tooltip;
 
 var cuisines = "";
 
-var localfoodJson = [
-    {sets: [0], label:"Bars", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [1], label:"Irish", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [2], label:"Chinese", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [3], label:"Italian", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [4], label:"Fast Food", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [5], label:"Pizza", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [6], label:"German", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [7], label:"Indian", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [8], label:"Mexican", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [9], label:"Thai", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [10], label:"French", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [11], label:"Arabian", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [12], label:"Burgers", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [13], label:"Sandwiches", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [14], label:"Vegan", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [15], label:"Bakeries", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [16], label:"Japanese", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [17], label:"Nightlife", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [18], label:"Coffee & Tea", initX: 0, initY: 0, size: 3000, color: "#fff"}];
-
 function startDrawingVenn() {
     if (tooltip !=  null)
         tooltip.remove();
@@ -36,8 +15,6 @@ function startDrawingVenn() {
 
     var div = d3.select("#venn")
     div.datum(sets).call(chart);
-
-
 
     tooltip = d3.select("body").append("div")
         .attr("class", "venntooltip");
@@ -55,7 +32,7 @@ function startDrawingVenn() {
             var tempStr = "";
             for (var i = 0; i < d.sets.length; i++) {
                 var index = d.sets[i];
-                tempStr += localfoodJson[index].label + " & "
+                tempStr += foodJson[index].label + " & "
             }
             tempStr = tempStr.substring(0, tempStr.length - 2);
 
@@ -89,10 +66,11 @@ function startDrawingVenn() {
             venn.sortAreas(div, d);
             for (var i = 0; i < d.sets.length; i++) {
                 var index = d.sets[i];
-                cuisines += localfoodJson[index].label + ","
+                cuisines += foodJson[index].label + ","
             }
             cuisines = cuisines.substring(0, cuisines.length - 1);
 
             getRestaurantList(cuisines);
         });
+
 }

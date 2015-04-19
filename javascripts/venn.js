@@ -1,4 +1,4 @@
-
+var vennSvg;
 (function(venn) {
     venn.VennDiagram = function() {
         var width = 600,
@@ -14,17 +14,17 @@
                 var circles = venn.scaleSolution(layoutFunction(data), width, height, padding);
                 var textCentres = computeTextCentres(circles, data, width, height);
 
-                // draw out a svg
-                var svg = d3.select(this).selectAll("svg").data([circles]);
-                svg.enter().append("svg");
+                // draw out a vennSvg
+                vennSvg = d3.select(this).selectAll("svg").data([circles]);
+                vennSvg.enter().append("svg");
 
-                svg.attr("width", width)
+                vennSvg.attr("width", width)
                     .attr("height", height);
 
                 // to properly transition intersection areas, we need the
                 // previous circles locations. load from elements
                 var previous = {}, hasPrevious = false;
-                svg.selectAll("g").each(function (d) {
+                vennSvg.selectAll("g").each(function (d) {
                     var path = d3.select(this).select("path").attr("d");
                     if ((d.sets.length == 1) && path) {
                         hasPrevious = true;
@@ -54,7 +54,7 @@
                 };
 
                 // update data, joining on the set ids
-                var nodes = svg.selectAll("g")
+                var nodes = vennSvg.selectAll("g")
                     .data(data, function(d) { return d.sets; });
 
                 // create new nodes
@@ -1068,3 +1068,51 @@
 
 
 }(window.venn = window.venn || {}));
+var bubObject;
+
+function drawCircleOnVenn() {
+
+
+    if (vennSvg != null && jsonResponse != null && selectedLocation != null) {
+
+        if (bubObject != null)
+            bubObject.remove();
+         bubObject = vennSvg.selectAll(".topBubble")
+            .data(jsonResponse)
+            .enter().append("circle")
+            .attr("class", "topBubble")
+            .attr("id", function(d,i) {return "topBubbleVenn" + i;})
+            .attr("r", function(d) { return oR; })
+            .attr("cx", function(d, i) {return 500})
+            .attr("cy", function (d, i) {return 90 *(i+1)})
+            .style("fill", "red") // #1f77b4
+            .attr("id", function(d,i) {return "vennRest_" + i})
+            .on("click", function(d, i) {visualizeInformation(d);});
+    }
+}
+
+function visualizeInformation(d) {
+    var pos = d.pos;
+    var neg = d.neg;
+    if (pos == "undefined")
+        pos = 0;
+
+    if (neg == "undefined")
+        neg = 0;
+    donutPosNeg(pos, neg);
+
+    var star1 = d.star1;
+    var star2 = d.star2;
+    var star3 = d.star3;
+    var star4 = d.star4;
+    var star5 = d.star5;
+
+    donutRating(star1, star2, star3, star4, star5);
+
+
+    var restaurantName = d.name;
+    var restaurantaddress = d.address;
+
+    document.getElementById("catList").innerHTML = "<p align='cener'><h2>" + restaurantName + "</h2><br> " + restaurantaddress + "<br><br><b>Stats:</b>" + d.stats + "</p>";
+    console.log(pos + ", " + neg + ", " + star1 + ", " + star2 +", " + star3 + ", " + star4 + ", " + star5);
+}
