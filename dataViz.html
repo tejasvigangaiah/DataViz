@@ -19,14 +19,27 @@
 </head>
 <body>
 <div class="bs-example">
-    <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">1. Select a Location.</a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div id="location-svg-container" align="center">
+                    <script src = "javascripts/drawLocationBubbles.js"></script>
+                </div>
+            </div>
+        </div>
+    </div>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">1. Select At Most 4 Cuisines.</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">2. Select At Most 4 Cuisines.</a>
                 </h4>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse">
+            <div id="collapseOne" class="panel-collapse collapse in">
                 <div class="panel-body">
                     <div id="cuisine-svg-container" align="center">
                         <script src = "javascripts/drawCuisineBubbles.js"></script>
@@ -34,22 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">2. Select a Location.</a>
-                </h4>
-            </div>
-            <div id="collapseTwo" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <div id="location-svg-container" align="center">
-                        <script src = "javascripts/drawLocationBubbles.js"></script>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-</div>
 <div id="venn" align="center">
     <script src="javascripts/drawVenn.js"></script>
 </div>

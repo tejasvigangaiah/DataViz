@@ -54,7 +54,7 @@ function updateVis(d) {
         .attr("cy", function(d) { return d.y; })
         .attr("r", function(d) { return d.r})
         .style("fill", function (xD) { if (d.name == xD.name || selectedAttributes.indexOf(xD.name.toLowerCase()) >= 0) return "#62CC8E"; else  if (xD.name == "Root") return "beige"; else return "#bdbdbd";})
-        .each('end',function(xD){if (attrCount == 5) { if (xD.name == d.name) window.open("dataViz.html?attributes="+selectedAttributes, "_self");}});
+        .each('end',function(xD){if (attrCount == 3) { if (xD.name == d.name) window.open("dataViz.html?attributes="+selectedAttributes, "_self");}});
 
     circleTexts.transition()
         .duration(1500)

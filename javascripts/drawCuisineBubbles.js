@@ -85,9 +85,9 @@ function handleCuisineBubbleClick(d, i) {
             removeElementFrmVenSet(d);
         }
 
+        removeBubblesOnVenn();
         inflateBubble(d,i);
         startDrawingVenn();
-        drawCircleOnVenn();
     }
 }
 
@@ -216,9 +216,6 @@ function getRestaurantList(cuisines) {
         alert("Go back to home page and select attributes");
         return;
     }
-    console.log(cuisines);
-    console.log(selectedLocation);
-    console.log(indexAttributes);
     var link = "http://yelp-reco-dv.herokuapp.com/recommend?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + indexAttributes;
     httpGet(link);
 }
@@ -235,8 +232,6 @@ function httpGet(url)
     xhr.onload = function() {
         var text = xhr.responseText;
         jsonResponse = JSON.parse(text);
-
-
 
         if (jsonResponse != null)
             drawCircleOnVenn();

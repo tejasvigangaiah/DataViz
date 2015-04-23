@@ -2,7 +2,7 @@
  * Created by kpbhatt on 3/15/2015.
  */
 var tooltip;
-
+var div;
 var cuisines = "";
 
 function startDrawingVenn() {
@@ -13,7 +13,7 @@ function startDrawingVenn() {
         .width(1000)
         .height(1000);
 
-    var div = d3.select("#venn")
+    div = d3.select("#venn")
     div.datum(sets).call(chart);
 
     tooltip = d3.select("body").append("div")
@@ -64,6 +64,28 @@ function startDrawingVenn() {
         .on("click", function (d, i) {
             cuisines = "";
             venn.sortAreas(div, d);
+            selectedCircleRadius = [], selectedCircleCx = [], selectedCircleCy = [];
+            selectedRegionWidth = d3.select(this)[0][0].getBoundingClientRect().width;
+            selectdRegionHeight = d3.select(this)[0][0].getBoundingClientRect().height;
+            console.log(selectedRegionWidth);
+            console.log(selectdRegionHeight);
+            var className = d3.select(this)[0][0].getAttribute("class");
+            if (className.indexOf("circle") > -1) {
+                selectedCircleRadius.push(d3.select(this)[0][0].getBBox().width/2);
+                selectedCircleCx.push(radius + d3.select(this)[0][0].getBBox().x);
+                selectedCircleCy.push(radius + d3.select(this)[0][0].getBBox().y);
+            } else {
+                var setName = className.substring(38);
+                var setNameArray = setName.split("_");
+                for (var i = 0; i < setNameArray.length; i++) {
+                    var cls = "venn-area venn-circle venn-sets-" + setNameArray[i];
+                    var gElement = getGByClassName(cls, div.selectAll("g")[0]);
+                    selectedCircleRadius.push(d3.select(gElement)[0][0].getBBox().width/2);
+                    selectedCircleCx.push(radius + d3.select(gElement)[0][0].getBBox().x);
+                    selectedCircleCy.push(radius + d3.select(gElement)[0][0].getBBox().y);
+                }
+            }
+
             for (var i = 0; i < d.sets.length; i++) {
                 var index = d.sets[i];
                 cuisines += foodJson[index].label + ","
@@ -73,4 +95,18 @@ function startDrawingVenn() {
             getRestaurantList(cuisines);
         });
 
+
+    function getGByClassName(cName, arrayOfG) {
+        var retVal = null;
+        for (var i = 0; i < arrayOfG.length - 1; i++) {
+            if (arrayOfG[i].getAttribute("class") == cName) {
+                retVal = arrayOfG[i];
+                break;
+            }
+        }
+        return retVal;
+    }
 }
+
+var selectedRegionWidth, selectdRegionHeight;
+var selectedCircleRadius = [], selectedCircleCx = [], selectedCircleCy = [];

@@ -1070,25 +1070,69 @@ var vennSvg;
 }(window.venn = window.venn || {}));
 var bubObject;
 
-function drawCircleOnVenn() {
+function removeBubblesOnVenn() {
+    if (bubObject != null) {
+        bubObject.remove();
+    }
+}
 
+function drawCircleOnVenn() {
 
     if (vennSvg != null && jsonResponse != null && selectedLocation != null) {
 
         if (bubObject != null)
             bubObject.remove();
-         bubObject = vennSvg.selectAll(".topBubble")
+
+        bubObject = vennSvg.selectAll(".topBubble")
             .data(jsonResponse)
-            .enter().append("circle")
             .attr("class", "topBubble")
-            .attr("id", function(d,i) {return "topBubbleVenn" + i;})
-            .attr("r", function(d) { return oR; })
-            .attr("cx", function(d, i) {return 500})
-            .attr("cy", function (d, i) {return 90 *(i+1)})
+            .attr("id", function (d, i) {
+                return "topBubbleVenn" + i;
+            })
+        ;
+
+        bubObject.enter().append("circle")
+            .attr("r", function (d) {
+                return oR / 2;
+            })
+            .attr("cx", function (d, i) {
+                return getCxValue(d, i, jsonResponse.length);
+            })
+            .attr("cy", function (d, i) {
+                return getCyValue(d, i, jsonResponse.length);
+            })
             .style("fill", "red") // #1f77b4
-            .attr("id", function(d,i) {return "vennRest_" + i})
-            .on("click", function(d, i) {visualizeInformation(d);});
+            .attr("id", function (d, i) {
+                return "vennRest_" + i
+            })
+            .on("mouseover", function (d, i) {
+                console.log("Hello");
+            })
+            .on("mouseout", function (d, i) {
+                console.log("world");
+            })
+            .on("click", function (d, i) {
+                visualizeInformation(d);
+            });
+
+        /*bubObject.enter().append("text")
+            .attr("x", function (d, i) {
+                return getCxValue(d, i, jsonResponse.length) - 3;
+            })
+            .attr("y", function (d, i) {
+                return getCyValue(d, i, jsonResponse.length) + 5;
+            })
+            .style("fill", "black") // #1f77b4
+            .attr("id", function (d, i) {
+                return "vennRestText_" + i
+            })
+            .text(function (d, i) {
+                return i + 1
+            }).on("click", function (d, i) {
+                visualizeInformation(d);
+            });*/
     }
+
 }
 
 function visualizeInformation(d) {
@@ -1109,10 +1153,24 @@ function visualizeInformation(d) {
 
     donutRating(star1, star2, star3, star4, star5);
 
-
     var restaurantName = d.name;
     var restaurantaddress = d.address;
 
     document.getElementById("catList").innerHTML = "<p align='cener'><h2>" + restaurantName + "</h2><br> " + restaurantaddress + "<br><br><b>Stats:</b>" + d.stats + "</p>";
-    console.log(pos + ", " + neg + ", " + star1 + ", " + star2 +", " + star3 + ", " + star4 + ", " + star5);
+}
+
+function getCxValue(d, i, jsonLength) {
+    var rad = toRadians((360/jsonLength) * (i + 1));
+    var x = Math.cos(rad) * (selectedCircleRadius[0] - oR * 4)+ selectedCircleCx[0] + selectedCircleRadius[0] - 40;
+    return x;
+}
+
+
+function getCyValue(d, i, jsonLength) {
+    var rad = toRadians((360 / jsonLength) * (i + 1));
+    var y = Math.sin(rad) * (selectedCircleRadius[0] - oR * 4) + selectedCircleCy[0] + selectedCircleRadius[0] - 40;
+    return y;
+}
+function toRadians (angle) {
+    return angle * (Math.PI / 180);
 }
