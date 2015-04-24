@@ -1,7 +1,8 @@
 var diameter = 500,
     format = d3.format(",d"),
     dataSource = 0,
-   // color = d3.scale.category20(),
+    color = ["#EBC157", "#84EC74", "#B3B5F0" ],
+    indexColor = 0;
     attrCount = 0;
 
 var selectedAttributes = [];
@@ -23,7 +24,7 @@ var vis = svg.datum(data).selectAll(".node")
     .data(pack.nodes)
     .enter()
     .append("g")
-    .on("click", function(d) { if (d.name != "Root") updateVis(d);});
+    .on("click", function(d, i) { if (d.name != "Root") updateVis(d, i);});
 
 
 var circles = vis.append("circle")
@@ -40,20 +41,37 @@ var circleTexts = vis.append("text")
     .style("text-anchor", "middle")
     .text(function(d) {  if (d.name == "Root") return ""; else return d.name });
 
-//updateVis();
+function updateVis(d, i) {
 
-function updateVis(d) {
-
-    pack.value(function(xd) { return getSize(xd, d.name)});
+    pack.value(function (xd) {
+        return getSize(xd, d.name)
+    });
 
     var data1 = pack.nodes(data);
 
     circles.transition()
         .duration(1500)
-        .attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; })
-        .attr("r", function(d) { return d.r})
-        .style("fill", function (xD) { if (d.name == xD.name || selectedAttributes.indexOf(xD.name.toLowerCase()) >= 0) return "#62CC8E"; else  if (xD.name == "Root") return "beige"; else return "#bdbdbd";})
+        .attr("cx", function (d) {
+            return d.x;
+        })
+        .attr("cy", function (d) {
+            return d.y;
+        })
+        .attr("r", function (d) {
+            return d.r
+        })
+        .style("fill", function (xD, i) {
+            if (d.name == xD.name || selectedAttributes.indexOf(xD.name.toLowerCase()) >= 0) {
+                return color[indexColor++];
+            }
+            else {
+                if (xD.name == "Root")
+                    return "beige";
+                else
+                    return "#bdbdbd";
+            }
+        })
+
         .each('end',function(xD){if (attrCount == 3) { if (xD.name == d.name) window.open("dataViz.html?attributes="+selectedAttributes, "_self");}});
 
     circleTexts.transition()
@@ -63,6 +81,8 @@ function updateVis(d) {
 
 
 };
+
+var btnColors = [];
 
 function getSize(xd, name) {
     // Selected node

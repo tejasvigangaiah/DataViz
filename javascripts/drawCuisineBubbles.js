@@ -17,7 +17,8 @@ var foodJson = [
     {sets: [15], label:"Bakeries", initX: 0, initY: 0, size: 3000, color: "#fff"},
     {sets: [16], label:"Japanese", initX: 0, initY: 0, size: 3000, color: "#fff"},
     {sets: [17], label:"Nightlife", initX: 0, initY: 0, size: 3000, color: "#fff"},
-    {sets: [18], label:"Coffee & Tea", initX: 0, initY: 0, size: 3000, color: "#fff"}];
+    {sets: [18], label:"Coffee & Tea", initX: 0, initY: 0, size: 3000, color: "#fff"}]
+    , color = ["#EBC157", "#84EC74", "#B3B5F0" ];
 
 var w = 1000;
 var h = 150;
@@ -260,3 +261,30 @@ function createCORSRequest(method, url) {
     }
     return xhr;
 }
+
+
+window.onload = function() {
+    var attrs = indexAttributes.split(",");
+    for (var i = 0; i < color.length; i++) {
+        var btnId = "btn" + (i + 1);
+        document.getElementById(btnId).innerHTML = capitalizeFirstLetter(attrs[i]);
+        document.getElementById(btnId).style.background = color[i];
+    }
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+$('body').on('click', '.btn-group-horizontal button', function (e) {
+    $(this).addClass('active');
+    $(this).siblings().removeClass('active');
+    var attName = e.target.textContent.trim();
+    console.log(attName);
+
+    /*
+    selectedAttribute = attName;
+    setNodeColor();
+    if (root)
+        update(root);*/
+});

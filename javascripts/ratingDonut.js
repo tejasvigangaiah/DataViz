@@ -29,7 +29,7 @@ function donutRating(star1, star2, star3, star4, star5) {
             }
         },
         size: {
-            height: 250
+            height: 333
         },
         donut: {
             title: 'Number of Stars',

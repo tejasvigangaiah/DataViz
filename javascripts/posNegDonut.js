@@ -17,7 +17,7 @@ function donutPosNeg(posVal, negVal) {
 
         },
         size: {
-            height: 250
+            height: 333
         },
         donut: {
             title: 'Reviews'

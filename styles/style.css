@@ -53,25 +53,40 @@ body {
 }
 
 #donut1 {
-    width: 250px;
-    height: 250px;
+    width: 333px;
+    height: 333px;
     float: right;
     border: dashed 1px black;
 }
 
 #donut2 {
-    width: 250px;
-    height: 250px;
+    width: 334px;
+    height: 333px;
     float: left;
     border: dashed 1px black;
 }
 
 #catList {
-    width: 250px;
-    height: 250px;
+    width: 333px;
+    height: 297px;
     border: dashed 1px black;
 }
 
 .bs-example{
     margin: 20px;
+}
+
+#btn1 {
+    width: 100px;
+    background-color: #808080;
+}
+
+#btn2 {
+    width: 100px;
+    background-color: #808080;
+}
+
+#btn3 {
+    width: 100px;
+    background-color: #808080;
 }
