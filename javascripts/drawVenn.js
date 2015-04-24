@@ -4,6 +4,7 @@
 var tooltip;
 var div;
 var cuisines = "";
+var setNameArray;
 
 function startDrawingVenn() {
     if (tooltip !=  null)
@@ -41,11 +42,14 @@ function startDrawingVenn() {
             tooltip.text(tempStr);
 
             // highlight the current path
-            var selection = d3.select(this).transition("tooltip").duration(400);
-            selection.select("path")
-                .style("stroke-width", 3)
-                .style("fill-opacity", d.sets.length == 1 ? .4 : .1)
-                .style("stroke-opacity", 1);
+
+
+                var selection = d3.select(this).transition("tooltip").duration(400);
+                selection.select("path")
+                    .style("stroke-width", 3)
+                    .style("fill-opacity", d.sets.length == 1 ? .4 : .1)
+                    .style("stroke-opacity", 1);
+
         })
 
         .on("mousemove", function () {
@@ -55,36 +59,39 @@ function startDrawingVenn() {
 
         .on("mouseout", function (d, i) {
             tooltip.transition().duration(400).style("opacity", 0);
+        if (this != currentSelectedObj) {
             var selection = d3.select(this).transition("tooltip").duration(400);
             selection.select("path")
                 .style("stroke-width", 0)
                 .style("fill-opacity", d.sets.length == 1 ? .25 : .0)
                 .style("stroke-opacity", 0);
+        }
         })
         .on("click", function (d, i) {
+            if (currentSelectedObj != null) {
+                d3.select(currentSelectedObj).select("path").style("stroke", "white")
+                    .style("stroke-width", 0)
+                    .style("stroke-opacity", 0);
+            }
+
             cuisines = "";
             venn.sortAreas(div, d);
             selectedCircleRadius = [], selectedCircleCx = [], selectedCircleCy = [];
-            selectedRegionWidth = d3.select(this)[0][0].getBoundingClientRect().width;
-            selectdRegionHeight = d3.select(this)[0][0].getBoundingClientRect().height;
-            console.log(selectedRegionWidth);
-            console.log(selectdRegionHeight);
+            setNameArray = null;
             var className = d3.select(this)[0][0].getAttribute("class");
             if (className.indexOf("circle") > -1) {
                 selectedCircleRadius.push(d3.select(this)[0][0].getBBox().width/2);
-                selectedCircleCx.push(radius + d3.select(this)[0][0].getBBox().x);
-                selectedCircleCy.push(radius + d3.select(this)[0][0].getBBox().y);
+                selectedCircleCx.push(selectedCircleRadius[0] + d3.select(this)[0][0].getBBox().x);
+                selectedCircleCy.push(selectedCircleRadius[0] + d3.select(this)[0][0].getBBox().y);
             } else {
                 var setName = className.substring(38);
-                var setNameArray = setName.split("_");
-                for (var i = 0; i < setNameArray.length; i++) {
-                    var cls = "venn-area venn-circle venn-sets-" + setNameArray[i];
-                    var gElement = getGByClassName(cls, div.selectAll("g")[0]);
-                    selectedCircleRadius.push(d3.select(gElement)[0][0].getBBox().width/2);
-                    selectedCircleCx.push(radius + d3.select(gElement)[0][0].getBBox().x);
-                    selectedCircleCy.push(radius + d3.select(gElement)[0][0].getBBox().y);
-                }
+                setNameArray = setName.split("_");
+                selectedCircleCx.push(d3.select(this)[0][0].getBBox().width / 2 + d3.select(this)[0][0].getBBox().x );
+                selectedCircleCy.push(d3.select(this)[0][0].getBBox().height / 2 + d3.select(this)[0][0].getBBox().y);
             }
+
+            currentSelectedObj = this;
+            d3.select(this).select("path").style("stroke", "red");
 
             for (var i = 0; i < d.sets.length; i++) {
                 var index = d.sets[i];
@@ -94,19 +101,6 @@ function startDrawingVenn() {
 
             getRestaurantList(cuisines);
         });
-
-
-    function getGByClassName(cName, arrayOfG) {
-        var retVal = null;
-        for (var i = 0; i < arrayOfG.length - 1; i++) {
-            if (arrayOfG[i].getAttribute("class") == cName) {
-                retVal = arrayOfG[i];
-                break;
-            }
-        }
-        return retVal;
-    }
 }
 
-var selectedRegionWidth, selectdRegionHeight;
-var selectedCircleRadius = [], selectedCircleCx = [], selectedCircleCy = [];
+var selectedCircleRadius = [], selectedCircleCx = [], selectedCircleCy = [], currentSelectedObj;

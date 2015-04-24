@@ -1093,7 +1093,7 @@ function drawCircleOnVenn() {
 
         bubObject.enter().append("circle")
             .attr("r", function (d) {
-                return oR / 2;
+                if (setNameArray == null) return oR / 2; else return oR / 3;
             })
             .attr("cx", function (d, i) {
                 return getCxValue(d, i, jsonResponse.length);
@@ -1160,17 +1160,30 @@ function visualizeInformation(d) {
 }
 
 function getCxValue(d, i, jsonLength) {
-    var rad = toRadians((360/jsonLength) * (i + 1));
-    var x = Math.cos(rad) * (selectedCircleRadius[0] - oR * 4)+ selectedCircleCx[0] + selectedCircleRadius[0] - 40;
+    var x;
+    if (selectedCircleRadius.length == 1 && setNameArray == null) {
+        var rad = toRadians((360 / jsonLength) * (i + 1));
+        x = Math.cos(rad) * (selectedCircleRadius[0] - oR * 4) + selectedCircleCx[0] ;
+    } else {
+        var rad = toRadians((360 / jsonLength) * (i + 1));
+        x = Math.cos(rad) * (100 - oR / 4) + selectedCircleCx[0];
+    }
     return x;
 }
 
 
 function getCyValue(d, i, jsonLength) {
-    var rad = toRadians((360 / jsonLength) * (i + 1));
-    var y = Math.sin(rad) * (selectedCircleRadius[0] - oR * 4) + selectedCircleCy[0] + selectedCircleRadius[0] - 40;
+    var y;
+    if (selectedCircleRadius.length == 1 && setNameArray == null) {
+        var rad = toRadians((360 / jsonLength) * (i + 1));
+        y = Math.sin(rad) * (selectedCircleRadius[0] - oR * 4) + selectedCircleCy[0];
+    } else {
+        var rad = toRadians((360 / jsonLength) * (i + 1));
+        y = Math.sin(rad) * (100 - oR / 4) + selectedCircleCy[0];
+    }
     return y;
 }
 function toRadians (angle) {
     return angle * (Math.PI / 180);
 }
+
