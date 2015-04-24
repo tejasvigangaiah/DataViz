@@ -197,6 +197,73 @@ def test():
 	except:
 		traceback.print_exc(file=sys.stdout)
 		return "ERROR"
+
+# Recommendation path with single preference
+@app.route("/recommendOne")
+@cross_origin()
+def testOne():
+
+	try:
+		# Read from query strings
+		location = request.args.get('location')
+		categories = request.args.get('categories')
+		preference = request.args.get('preferences')
+
+		# Split the input requirements
+		categoryList = categories.split(',')
+		category = [{"categories":x} for x in categoryList]
+
+		# Get the state for the given location
+		state = getState(location)
+
+		# MongoLab URL - This username and password only has read access
+		MONGODB_URI = 'mongodb://dvyelp:dvyelp@ds035448.mongolab.com:35448/dv_yelp' 
+
+		# Connect to Mongo Lab
+		conn = pymongo.MongoClient(MONGODB_URI)
+
+		# Get the default database
+		db = conn.get_default_database()
+
+		# Get the data collection
+		yelpmodel = db['yelpmodel']
+
+		# Query the collection with the preference
+		cursorPref1 = yelpmodel.find({"state":state, "$or" : category}).sort(preference).limit(10)
+
+		# List storing the recommended top 10 restaurants
+		recPref = list()
+
+		# Rank of each restaurant
+		rank = 1
+		
+		# Collect all the records
+		for doc in cursorPref1:
+		    recPref.append(dict())
+		    recPref[rank-1]["address"] = doc["address"]
+		    recPref[rank-1]["pos"] = doc["pos"]
+		    recPref[rank-1]["neg"] = doc["neg"]
+		    recPref[rank-1]["stars"] = doc["stars"]
+		    recPref[rank-1]["star1"] = doc["star1"]
+		    recPref[rank-1]["star2"] = doc["star2"]
+		    recPref[rank-1]["star3"] = doc["star3"]
+		    recPref[rank-1]["star4"] = doc["star4"]
+		    recPref[rank-1]["star5"] = doc["star5"]
+		    recPref[rank-1]["stars"] = doc["stars"]
+		    recPref[rank-1]["name"] = doc["name"]
+		    recPref[rank-1]["rank"] = rank
+		    recPref[rank-1]["categories"] = doc["categories"]
+		    recPref[rank-1]["avgscore"] = doc[preference]
+		    recPref[rank-1]["stats"] = "Ranked " + str(rank) + " in '" + preference + "' category"
+		    rank += 1
+
+		# Close connection
+		conn.close()
+		return json.dumps(recPref)
+	
+	except:
+		traceback.print_exc(file=sys.stdout)
+		return "ERROR"
 	
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
