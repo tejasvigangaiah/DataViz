@@ -5,6 +5,7 @@ var tooltip;
 var div;
 var cuisines = "";
 var setNameArray;
+var spinner;
 
 function startDrawingVenn() {
     if (tooltip !=  null)
@@ -99,8 +100,31 @@ function startDrawingVenn() {
             }
             cuisines = cuisines.substring(0, cuisines.length - 1);
 
+
+            var target = document.getElementById('venn');
+            spinner = new Spinner(opts).spin(target);
+            document.getElementById('venn')
             getRestaurantList(cuisines);
         });
 }
+
+var opts = {
+    lines: 13, // The number of lines to draw
+    length: 17, // The length of each line
+    width: 8, // The line thickness
+    radius: 21, // The radius of the inner circle
+    corners: 1, // Corner roundness (0..1)
+    rotate: 58, // The rotation offset
+    direction: 1, // 1: clockwise, -1: counterclockwise
+    color: '#000', // #rgb or #rrggbb or array of colors
+    speed: 0.9, // Rounds per second
+    trail: 100, // Afterglow percentage
+    shadow: false, // Whether to render a shadow
+    hwaccel: false, // Whether to use hardware acceleration
+    className: 'spinner', // The CSS class to assign to the spinner
+    zIndex: 2e9, // The z-index (defaults to 2000000000)
+    top: '50%', // Top position relative to parent
+    left: '50%' // Left position relative to parent
+};
 
 var selectedCircleRadius = [], selectedCircleCx = [], selectedCircleCy = [], currentSelectedObj;

@@ -41,6 +41,7 @@ body {
     margin-right: auto;
     overflow: visible;
     color:#FFFFFF;
+    position: relative;
 }
 
 #venn span {

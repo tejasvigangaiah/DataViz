@@ -217,6 +217,8 @@ function getRestaurantList(cuisines) {
         alert("Go back to home page and select attributes");
         return;
     }
+
+    console.log(selectedLocation);
     var link = "http://yelp-reco-dv.herokuapp.com/recommend?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + indexAttributes;
     httpGet(link);
 }
@@ -228,7 +230,7 @@ function httpGet(url)
         alert('CORS not supported');
         return;
     }
-
+    console.log(selectedLocation);
     // Response handlers.
     xhr.onload = function() {
         var text = xhr.responseText;
@@ -247,6 +249,7 @@ function httpGet(url)
 }
 
 function createCORSRequest(method, url) {
+
     var xhr = new XMLHttpRequest();
     if ("withCredentials" in xhr) {
         // XHR for Chrome/Firefox/Opera/Safari.

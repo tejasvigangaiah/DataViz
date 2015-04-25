@@ -1115,6 +1115,7 @@ function drawCircleOnVenn() {
                 visualizeInformation(d);
             });
 
+        spinner.stop();
         /*bubObject.enter().append("text")
             .attr("x", function (d, i) {
                 return getCxValue(d, i, jsonResponse.length) - 3;

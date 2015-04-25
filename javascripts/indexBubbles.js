@@ -1,6 +1,4 @@
 var diameter = 500,
-    format = d3.format(",d"),
-    dataSource = 0,
     color = ["#EBC157", "#84EC74", "#B3B5F0" ],
     indexColor = 0;
     attrCount = 0;
@@ -61,8 +59,12 @@ function updateVis(d, i) {
             return d.r
         })
         .style("fill", function (xD, i) {
-            if (d.name == xD.name || selectedAttributes.indexOf(xD.name.toLowerCase()) >= 0) {
-                return color[indexColor++];
+            if (selectedAttributes.indexOf(xD.name.toLowerCase()) >= 0 && d.color == "") {
+                d.color = color[indexColor++];
+                console.log(indexColor);
+                return d.color;
+            } else if (selectedAttributes.indexOf(xD.name.toLowerCase()) >= 0 && d.color != "") {
+                return d.color;
             }
             else {
                 if (xD.name == "Root")
@@ -114,44 +116,44 @@ function getData() {
     return {
         "name": "Root",
         "children": [
-            {"name":"Accurate", "size":500},
-            {"name":"Ambience", "size":500},
-            {"name":"Bake", "size":500},
-            {"name":"Best", "size":500},
-            {"name":"Commitment", "size":500},
-            {"name":"Confidence", "size":500},
-            {"name":"Delivery", "size":500},
-            {"name":"Different", "size":500},
-            {"name":"Economy", "size":500},
-            {"name":"Enormous", "size":500},
-            {"name":"Excellent", "size":500},
-            {"name":"Fantastic", "size":500},
-            {"name":"Filling", "size":500},
-            {"name":"Flavor", "size":500},
-            {"name":"Fresh", "size":500},
-            {"name":"Friendly", "size":500},
-            {"name":"Grow", "size":500},
-            {"name":"Happy", "size":500},
-            {"name":"Honest", "size":500},
-            {"name":"Hot", "size":500},
-            {"name":"Love", "size":500},
-            {"name":"Memorable", "size":500},
-            {"name":"Neighborhood", "size":500},
-            {"name":"New", "size":500},
-            {"name":"Pleasant", "size":500},
-            {"name":"Price", "size":500},
-            {"name":"Quality", "size":500},
-            {"name":"Quick", "size":500},
-            {"name":"Reasonable", "size":500},
-            {"name":"Recommend", "size":500},
-            {"name":"Service", "size":500},
-            {"name":"Special", "size":500},
-            {"name":"Stuff", "size":500},
-            {"name":"Sturdy", "size":500},
-            {"name":"Surprise", "size":500},
-            {"name":"Taste", "size":500},
-            {"name":"Together", "size":500},
-            {"name":"Worth", "size":500},
+            {"name":"Accurate", "size":500, "color":""},
+            {"name":"Ambience", "size":500, "color":""},
+            {"name":"Bake", "size":500, "color":""},
+            {"name":"Best", "size":500, "color":""},
+            {"name":"Commitment", "size":500, "color":""},
+            {"name":"Confidence", "size":500, "color":""},
+            {"name":"Delivery", "size":500, "color":""},
+            {"name":"Different", "size":500, "color":""},
+            {"name":"Economy", "size":500, "color":""},
+            {"name":"Enormous", "size":500, "color":""},
+            {"name":"Excellent", "size":500, "color":""},
+            {"name":"Fantastic", "size":500, "color":""},
+            {"name":"Filling", "size":500, "color":""},
+            {"name":"Flavor", "size":500, "color":""},
+            {"name":"Fresh", "size":500, "color":""},
+            {"name":"Friendly", "size":500, "color":""},
+            {"name":"Grow", "size":500, "color":""},
+            {"name":"Happy", "size":500, "color":""},
+            {"name":"Honest", "size":500, "color":""},
+            {"name":"Hot", "size":500, "color":""},
+            {"name":"Love", "size":500, "color":""},
+            {"name":"Memorable", "size":500, "color":""},
+            {"name":"Neighborhood", "size":500, "color":""},
+            {"name":"New", "size":500, "color":""},
+            {"name":"Pleasant", "size":500, "color":""},
+            {"name":"Price", "size":500, "color":""},
+            {"name":"Quality", "size":500, "color":""},
+            {"name":"Quick", "size":500, "color":""},
+            {"name":"Reasonable", "size":500, "color":""},
+            {"name":"Recommend", "size":500, "color":""},
+            {"name":"Service", "size":500, "color":""},
+            {"name":"Special", "size":500, "color":""},
+            {"name":"Stuff", "size":500, "color":""},
+            {"name":"Sturdy", "size":500, "color":""},
+            {"name":"Surprise", "size":500, "color":""},
+            {"name":"Taste", "size":500, "color":""},
+            {"name":"Together", "size":500, "color":""},
+            {"name":"Worth", "size":500, "color":""},
         ]
 
     };

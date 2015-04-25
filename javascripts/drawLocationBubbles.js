@@ -4,10 +4,10 @@
 var locationJson = [
     {label: "Phoenix", state: ", AZ"},
     {label: "Madison", state: ", WI"},
-    {label: "Las Vegas", state: ", NV"},
+    {label: "LasVegas", state: ", NV"},
     {label: "Pittsburgh", state: ", PA"},
     {label: "Charolette", state: ", NC"},
-    {label: "Urbana-Champaign", state: ", IL"},
+    {label: "UrbanaChampaign", state: ", IL"},
     {label: "Waterloo", state: ", Canada"},
     {label: "Montreal", state: ", Canada"},
     {label: "Edinburgh", state: ", UK"},
