@@ -1076,7 +1076,7 @@ function removeBubblesOnVenn() {
     }
 }
 
-function drawCircleOnVenn() {
+function drawCircleOnVenn(givenColor) {
 
     if (vennSvg != null && jsonResponse != null && selectedLocation != null) {
 
@@ -1101,37 +1101,29 @@ function drawCircleOnVenn() {
             .attr("cy", function (d, i) {
                 return getCyValue(d, i, jsonResponse.length);
             })
-            .style("fill", "red") // #1f77b4
+            .style("fill", function() {
+                if (givenColor == null) return "red"; else return givenColor;
+            }) // #1f77b4
             .attr("id", function (d, i) {
                 return "vennRest_" + i
             })
             .on("mouseover", function (d, i) {
-                console.log("Hello");
+                if (tooltip != null) {
+                    tooltip.transition().duration(400).style("opacity", .9);
+                    tooltip.text(d.name);
+                }
+            })
+            .on("mousemove", function() {
+                tooltip.style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
             })
             .on("mouseout", function (d, i) {
-                console.log("world");
             })
             .on("click", function (d, i) {
                 visualizeInformation(d);
             });
 
         spinner.stop();
-        /*bubObject.enter().append("text")
-            .attr("x", function (d, i) {
-                return getCxValue(d, i, jsonResponse.length) - 3;
-            })
-            .attr("y", function (d, i) {
-                return getCyValue(d, i, jsonResponse.length) + 5;
-            })
-            .style("fill", "black") // #1f77b4
-            .attr("id", function (d, i) {
-                return "vennRestText_" + i
-            })
-            .text(function (d, i) {
-                return i + 1
-            }).on("click", function (d, i) {
-                visualizeInformation(d);
-            });*/
     }
 
 }

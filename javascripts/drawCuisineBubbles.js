@@ -25,6 +25,7 @@ var h = 150;
 var bubbleHeight = 168;
 var indexAttributes = parseURLParams(window.location.href);
 var nTop, oR;
+var target = document.getElementById('venn');
 
 var svgContainer = d3.select("#cuisine-svg-container")
     .style("height", h+"px");
@@ -203,13 +204,13 @@ var jsonResponse;
 
 function getRestaurantList(cuisines) {
 
-    if (cuisines == null || cuisines == "") {
-        alert("Select cuisines");
+    if (selectedLocation == null || selectedLocation == "") {
+        alert("Select a location");
         return;
     }
 
-    if (selectedLocation == null || selectedLocation == "") {
-        alert("Select a location");
+    if (cuisines == null || cuisines == "") {
+        alert("Select cuisines");
         return;
     }
 
@@ -217,14 +218,22 @@ function getRestaurantList(cuisines) {
         alert("Go back to home page and select attributes");
         return;
     }
+    var target = document.getElementById('venn');
+    spinner.spin(target);
+    var localColor = "red";
+    if (singleAttrName == null) {
 
-    console.log(selectedLocation);
-    var link = "http://yelp-reco-dv.herokuapp.com/recommend?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + indexAttributes;
-    httpGet(link);
+        var link = "http://yelp-reco-dv.herokuapp.com/recommend?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + indexAttributes;
+    } else {
+        localColor = bgColor;
+        var link = "http://yelp-reco-dv.herokuapp.com/recommendOne?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + singleAttrName.toLowerCase();
+    }
+    httpGet(link, localColor);
 }
 
-function httpGet(url)
+function httpGet(url, givenColor)
 {
+
     var xhr = createCORSRequest('GET', url);
     if (!xhr) {
         alert('CORS not supported');
@@ -237,7 +246,7 @@ function httpGet(url)
         jsonResponse = JSON.parse(text);
 
         if (jsonResponse != null)
-            drawCircleOnVenn();
+            drawCircleOnVenn(givenColor);
 
     };
 
@@ -271,7 +280,7 @@ window.onload = function() {
     for (var i = 0; i < color.length; i++) {
         var btnId = "btn" + (i + 1);
         document.getElementById(btnId).innerHTML = capitalizeFirstLetter(attrs[i]);
-        document.getElementById(btnId).style.background = color[i];
+        document.getElementById(btnId).style.background = "#bdbdbd";
     }
 }
 
@@ -279,15 +288,55 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+var prevAttSelected;
+var singleAttrName;
+var counter = 0;
+var bgColor = "";
+
 $('body').on('click', '.btn-group-horizontal button', function (e) {
+
+    if (prevAttSelected != null ) {
+        prevAttSelected.style.background = "#bdbdbd";
+        if (prevAttSelected == this) {
+            singleAttrName = null;
+
+            if (bubObject != null)
+                bubObject.remove();
+        }
+    }
+
+    if (prevAttSelected != this) {
+        prevAttSelected = this;
+
+        counter++;
+        if (counter%2 == 0)
+            bgColor = "#EBC157";
+        else
+            bgColor = "#84EC74";
+        this.style.background = bgColor;
+        singleAttrName = e.target.textContent.trim();
+
+        if (selectedLocation == null || selectedLocation == "") {
+            alert("Select a location");
+            return;
+        }
+
+        if (cuisines == null || cuisines == "") {
+            alert("Select region on venn diagram");
+            return;
+        }
+
+        if (singleAttrName == null || singleAttrName == "") {
+            alert("Go back to home page and select attributes");
+            return;
+        }
+
+        spinner.spin(target);
+        var link = "http://yelp-reco-dv.herokuapp.com/recommendOne?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + singleAttrName.toLowerCase();
+        httpGet(link, bgColor);
+    }
+
+
     $(this).addClass('active');
     $(this).siblings().removeClass('active');
-    var attName = e.target.textContent.trim();
-    console.log(attName);
-
-    /*
-    selectedAttribute = attName;
-    setNodeColor();
-    if (root)
-        update(root);*/
 });

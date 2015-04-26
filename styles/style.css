@@ -18,6 +18,11 @@ body {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 14px;
     background-color: beige;
+    padding-top: 50px;
+}
+
+.footer {
+    padding-top: 50px;
 }
 
 .venntooltip {

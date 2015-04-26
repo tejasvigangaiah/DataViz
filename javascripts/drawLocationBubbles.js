@@ -68,6 +68,9 @@ function getCxVal(d, i) {
 }
 
 function handleLocationBubbleClick(d, i) {
+    if (bubObject != null)
+        bubObject.remove();
+
     if (selectedLocation == null) {
         selectedLocation = d.label;
     } else {

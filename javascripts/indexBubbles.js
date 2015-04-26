@@ -118,7 +118,6 @@ function getData() {
         "children": [
             {"name":"Accurate", "size":500, "color":""},
             {"name":"Ambience", "size":500, "color":""},
-            {"name":"Bake", "size":500, "color":""},
             {"name":"Best", "size":500, "color":""},
             {"name":"Commitment", "size":500, "color":""},
             {"name":"Confidence", "size":500, "color":""},
