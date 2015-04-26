@@ -7,11 +7,11 @@ var locationJson = [
     {label: "LasVegas", state: ", NV"},
     {label: "Pittsburgh", state: ", PA"},
     {label: "Charolette", state: ", NC"},
-    {label: "UrbanaChampaign", state: ", IL"},
-    {label: "Waterloo", state: ", Canada"},
-    {label: "Montreal", state: ", Canada"},
+    {label: "UrbanaChampaign", state: ""},
+    {label: "Waterloo", state: ", CAN"},
+    {label: "Montreal", state: ", CAN"},
     {label: "Edinburgh", state: ", UK"},
-    {label: "Karlsruhe", state: ", Germany"}
+    {label: "Karlsruhe", state: ", GER"}
 ];
 
 var w = 1000;

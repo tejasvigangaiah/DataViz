@@ -218,8 +218,7 @@ function getRestaurantList(cuisines) {
         alert("Go back to home page and select attributes");
         return;
     }
-    var target = document.getElementById('venn');
-    spinner.spin(target);
+
     var localColor = "red";
     if (singleAttrName == null) {
 
@@ -233,7 +232,8 @@ function getRestaurantList(cuisines) {
 
 function httpGet(url, givenColor)
 {
-
+    var target = document.getElementById('venn');
+    spinner.spin(target);
     var xhr = createCORSRequest('GET', url);
     if (!xhr) {
         alert('CORS not supported');
@@ -294,14 +294,35 @@ var counter = 0;
 var bgColor = "";
 
 $('body').on('click', '.btn-group-horizontal button', function (e) {
+    document.getElementById("catList").innerHTML = "";
+    if (average_aces != null)
+        average_aces.hide();
+
+    if (rating_Donut != null)
+        rating_Donut.hide();
 
     if (prevAttSelected != null ) {
-        prevAttSelected.style.background = "#bdbdbd";
-        if (prevAttSelected == this) {
-            singleAttrName = null;
 
-            if (bubObject != null)
+        if (prevAttSelected == this) {
+            if (this.style.background == "rgb(189, 189, 189)") {
+                this.style.background = "#84EC74";
+                singleAttrName = e.target.textContent.trim();
+                var link = "http://yelp-reco-dv.herokuapp.com/recommendOne?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + singleAttrName.toLowerCase();
+                httpGet(link, "#84EC74");
+                return;
+            } else {
+                prevAttSelected.style.background = "#bdbdbd";
+            }
+
+            singleAttrName = null;
+            if (bubObject != null) {
                 bubObject.remove();
+
+                var link = "http://yelp-reco-dv.herokuapp.com/recommend?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + indexAttributes;
+                httpGet(link, "red");
+            }
+        } else {
+            prevAttSelected.style.background = "#bdbdbd";
         }
     }
 
@@ -331,7 +352,6 @@ $('body').on('click', '.btn-group-horizontal button', function (e) {
             return;
         }
 
-        spinner.spin(target);
         var link = "http://yelp-reco-dv.herokuapp.com/recommendOne?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + singleAttrName.toLowerCase();
         httpGet(link, bgColor);
     }

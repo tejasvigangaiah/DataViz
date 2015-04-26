@@ -1,12 +1,9 @@
 /**
  * Created by kpbhatt on 4/15/2015.
  */
-
-var posVal = 50;
-var negVal = 50;
-//donutPosNeg(posVal, negVal);
+var average_aces;
 function donutPosNeg(posVal, negVal) {
-    var average_aces = c3.generate({
+    average_aces = c3.generate({
         bindto: '#donut1',
         data: {
             columns: [

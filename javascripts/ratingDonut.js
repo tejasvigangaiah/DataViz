@@ -1,15 +1,10 @@
 /**
  * Created by kpbhatt on 4/15/2015.
  */
-var star1 = 5;
-var star2 = 4;
-var star3 = 3;
-var star4 = 2;
-var star5 = 1;
-//donutRating(star1, star2, star3, star4, star5);
+var rating_Donut;
 
 function donutRating(star1, star2, star3, star4, star5) {
-    var average_aces = c3.generate({
+    rating_Donut = c3.generate({
         bindto: '#donut2',
         data: {
             columns: [
