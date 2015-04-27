@@ -1,6 +1,4 @@
 var diameter = 500,
-    color = ["#EBC157", "#84EC74", "#B3B5F0" ],
-    indexColor = 0;
     attrCount = 0;
 
 var selectedAttributes = [];
@@ -58,22 +56,18 @@ function updateVis(d, i) {
         .attr("r", function (d) {
             return d.r
         })
-        .style("fill", function (xD, i) {
-            if (selectedAttributes.indexOf(xD.name.toLowerCase()) >= 0 && d.color == "") {
-                d.color = color[indexColor++];
-                console.log(indexColor);
-                return d.color;
-            } else if (selectedAttributes.indexOf(xD.name.toLowerCase()) >= 0 && d.color != "") {
-                return d.color;
-            }
-            else {
-                if (xD.name == "Root")
-                    return "beige";
-                else
-                    return "#bdbdbd";
-            }
+        .style("fill", function (xD) {
+            var color = "";
+            if (d.name == xD.name && selectedAttributes.indexOf(xD.name.toLowerCase()) >= 0)
+                color =  "#62CC8E";
+            else if (d.name != xD.name && selectedAttributes.indexOf(xD.name.toLowerCase()) >= 0)
+                color =  "#62CC8E";
+            else  if (xD.name == "Root")
+                color =  "beige";
+            else
+                color =  "#bdbdbd";
+            return color;
         })
-
         .each('end',function(xD){if (attrCount == 3) { if (xD.name == d.name) window.open("dataViz.html?attributes="+selectedAttributes, "_self");}});
 
     circleTexts.transition()
@@ -81,10 +75,7 @@ function updateVis(d, i) {
         .attr("x", function(d) { return d.x; })
         .attr("y", function(d) { return d.y; });
 
-
 };
-
-var btnColors = [];
 
 function getSize(xd, name) {
     // Selected node
