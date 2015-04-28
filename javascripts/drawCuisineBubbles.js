@@ -221,10 +221,10 @@ function getRestaurantList(cuisines) {
     var localColor = "red";
     if (singleAttrName == null) {
 
-        var link = "http://yelp-reco-dv.herokuapp.com/recommend?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + indexAttributes;
+        var link = "https://yelp-reco-dv.herokuapp.com/recommend?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + indexAttributes;
     } else {
         localColor = bgColor;
-        var link = "http://yelp-reco-dv.herokuapp.com/recommendOne?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + singleAttrName.toLowerCase();
+        var link = "https://yelp-reco-dv.herokuapp.com/recommendOne?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + singleAttrName.toLowerCase();
     }
     httpGet(link, localColor, cuisines.split(",").length);
 }
@@ -305,7 +305,7 @@ $('body').on('click', '.btn-group-horizontal button', function (e) {
             if (this.style.background == "rgb(189, 189, 189)") {
                 this.style.background = "#84EC74";
                 singleAttrName = e.target.textContent.trim();
-                var link = "http://yelp-reco-dv.herokuapp.com/recommendOne?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + singleAttrName.toLowerCase();
+                var link = "https://yelp-reco-dv.herokuapp.com/recommendOne?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + singleAttrName.toLowerCase();
                 httpGet(link, "#84EC74", cuisines.split(",").length);
                 return;
             } else {
@@ -316,7 +316,7 @@ $('body').on('click', '.btn-group-horizontal button', function (e) {
             if (bubObject != null) {
                 bubObject.remove();
 
-                var link = "http://yelp-reco-dv.herokuapp.com/recommend?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + indexAttributes;
+                var link = "https://yelp-reco-dv.herokuapp.com/recommend?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + indexAttributes;
                 httpGet(link, "red", cuisines.split(",").length);
             }
         } else {
@@ -350,7 +350,7 @@ $('body').on('click', '.btn-group-horizontal button', function (e) {
             return;
         }
 
-        var link = "http://yelp-reco-dv.herokuapp.com/recommendOne?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + singleAttrName.toLowerCase();
+        var link = "https://yelp-reco-dv.herokuapp.com/recommendOne?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + singleAttrName.toLowerCase();
         httpGet(link, bgColor, cuisines.split(",").length);
     }
 
