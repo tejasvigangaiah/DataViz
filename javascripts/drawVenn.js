@@ -3,8 +3,8 @@
  */
 var tooltip;
 var div;
-var cuisines = "";
 var setNameArray;
+var cuisines;
 var opts = {
     lines: 13, // The number of lines to draw
     length: 17, // The length of each line
@@ -23,9 +23,10 @@ var opts = {
     top: '50%', // Top position relative to parent
     left: '50%' // Left position relative to parent
 };
+var selectedCircleRadius, selectedCircleCx, selectedCircleCy, currentSelectedObj;
 var spinner = new Spinner(opts);
 
-function startDrawingVenn() {
+function startDrawingVenn(sendRequest) {
     if (tooltip !=  null)
         tooltip.remove();
 
@@ -94,18 +95,18 @@ function startDrawingVenn() {
 
             cuisines = "";
             venn.sortAreas(div, d);
-            selectedCircleRadius = [], selectedCircleCx = [], selectedCircleCy = [];
             setNameArray = null;
             var className = d3.select(this)[0][0].getAttribute("class");
             if (className.indexOf("circle") > -1) {
-                selectedCircleRadius.push(d3.select(this)[0][0].getBBox().width/2);
-                selectedCircleCx.push(selectedCircleRadius[0] + d3.select(this)[0][0].getBBox().x);
-                selectedCircleCy.push(selectedCircleRadius[0] + d3.select(this)[0][0].getBBox().y);
+                selectedCircleRadius = d3.select(this)[0][0].getBBox().width/2;
+                selectedCircleCx = selectedCircleRadius + d3.select(this)[0][0].getBBox().x;
+                selectedCircleCy = selectedCircleRadius + d3.select(this)[0][0].getBBox().y;
+
             } else {
                 var setName = className.substring(38);
                 setNameArray = setName.split("_");
-                selectedCircleCx.push(d3.select(this)[0][0].getBBox().width / 2 + d3.select(this)[0][0].getBBox().x );
-                selectedCircleCy.push(d3.select(this)[0][0].getBBox().height / 2 + d3.select(this)[0][0].getBBox().y);
+                selectedCircleCx = d3.select(this)[0][0].getBBox().width / 2 + d3.select(this)[0][0].getBBox().x;
+                selectedCircleCy = d3.select(this)[0][0].getBBox().height / 2 + d3.select(this)[0][0].getBBox().y;
             }
 
             currentSelectedObj = this;
@@ -115,13 +116,26 @@ function startDrawingVenn() {
                 var index = d.sets[i];
                 cuisines += foodJson[index].label + ","
             }
+
             cuisines = cuisines.substring(0, cuisines.length - 1);
-
-
             getRestaurantList(cuisines);
         });
+
+
+    if (sendRequest) {
+
+        if (selectedCuisines.length == 1) {
+            selectedCircleRadius = 485;
+            setNameArray = null;
+        } else {
+            setNameArray = [];
+        }
+        selectedCircleCx = 500;
+        if (selectedCuisines.length == 3) {
+            selectedCircleCy = 479;
+        } else
+            selectedCircleCy = 500;
+        cuisines = selectedCuisines.toString();
+        getRestaurantList(cuisines);
+    }
 }
-
-
-
-var selectedCircleRadius = [], selectedCircleCx = [], selectedCircleCy = [], currentSelectedObj;

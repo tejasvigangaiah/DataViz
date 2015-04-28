@@ -68,7 +68,12 @@ function updateVis(d, i) {
                 color =  "#bdbdbd";
             return color;
         })
-        .each('end',function(xD){if (attrCount == 3) { if (xD.name == d.name) window.open("dataViz.html?attributes="+selectedAttributes, "_self");}});
+        .each('end',function(xD){
+            if (attrCount == 3) {
+                if (xD.name == d.name)
+                    window.open("dataViz.html?attributes="+selectedAttributes, "_self");
+            }
+        });
 
     circleTexts.transition()
         .duration(1500)

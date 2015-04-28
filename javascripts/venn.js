@@ -1076,7 +1076,7 @@ function removeBubblesOnVenn() {
     }
 }
 
-function drawCircleOnVenn(givenColor) {
+function drawCircleOnVenn(givenColor, cLength) {
 
     if (vennSvg != null && jsonResponse != null && selectedLocation != null) {
 
@@ -1092,14 +1092,17 @@ function drawCircleOnVenn(givenColor) {
         ;
 
         bubObject.enter().append("circle")
-            .attr("r", function (d) {
-                if (setNameArray == null) return oR / 2; else return oR / 3;
+            .attr("r", function (d, cLength) {
+                if (setNameArray == null)
+                    return oR / 2;
+                else
+                    return oR / 3;
             })
             .attr("cx", function (d, i) {
-                return getCxValue(d, i, jsonResponse.length);
+                return getCxValue(d, i, jsonResponse.length, cLength);
             })
             .attr("cy", function (d, i) {
-                return getCyValue(d, i, jsonResponse.length);
+                return getCyValue(d, i, jsonResponse.length, cLength);
             })
             .style("fill", function() {
                 if (givenColor == null) return "red"; else return givenColor;
@@ -1152,30 +1155,30 @@ function visualizeInformation(d) {
     document.getElementById("catList").innerHTML = "<p align='cener'><h2>" + restaurantName + "</h2><br> " + restaurantaddress + "<br><br><b>Stats:</b>" + d.stats + "</p>";
 }
 
-function getCxValue(d, i, jsonLength) {
+function getCxValue(d, i, jsonLength, cLength) {
     var x;
-    if (selectedCircleRadius.length == 1 && setNameArray == null) {
+    if (cLength == 1 && setNameArray == null) {
         var rad = toRadians((360 / jsonLength) * (i + 1));
-        x = Math.cos(rad) * (selectedCircleRadius[0] - oR * 4) + selectedCircleCx[0] ;
+        x = Math.cos(rad) * (selectedCircleRadius - oR * 4) + selectedCircleCx;
     } else {
         var rad = toRadians((360 / jsonLength) * (i + 1));
-        x = Math.cos(rad) * (100 - oR / 4) + selectedCircleCx[0];
+        x = Math.cos(rad) * (100 - oR / 4) + selectedCircleCx;
     }
     return x;
 }
 
-
-function getCyValue(d, i, jsonLength) {
+function getCyValue(d, i, jsonLength, cLength) {
     var y;
-    if (selectedCircleRadius.length == 1 && setNameArray == null) {
+    if (cLength == 1 && setNameArray == null) {
         var rad = toRadians((360 / jsonLength) * (i + 1));
-        y = Math.sin(rad) * (selectedCircleRadius[0] - oR * 4) + selectedCircleCy[0];
+        y = Math.sin(rad) * (selectedCircleRadius - oR * 4) + selectedCircleCy;
     } else {
         var rad = toRadians((360 / jsonLength) * (i + 1));
-        y = Math.sin(rad) * (100 - oR / 4) + selectedCircleCy[0];
+        y = Math.sin(rad) * (100 - oR / 4) + selectedCircleCy;
     }
     return y;
 }
+
 function toRadians (angle) {
     return angle * (Math.PI / 180);
 }

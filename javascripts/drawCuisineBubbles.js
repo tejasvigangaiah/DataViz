@@ -25,7 +25,6 @@ var h = 150;
 var bubbleHeight = 168;
 var indexAttributes = parseURLParams(window.location.href);
 var nTop, oR;
-var target = document.getElementById('venn');
 
 var svgContainer = d3.select("#cuisine-svg-container")
     .style("height", h+"px");
@@ -89,7 +88,7 @@ function handleCuisineBubbleClick(d, i) {
 
         removeBubblesOnVenn();
         inflateBubble(d,i);
-        startDrawingVenn();
+        startDrawingVenn(true);
     }
 }
 
@@ -227,10 +226,10 @@ function getRestaurantList(cuisines) {
         localColor = bgColor;
         var link = "http://yelp-reco-dv.herokuapp.com/recommendOne?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + singleAttrName.toLowerCase();
     }
-    httpGet(link, localColor);
+    httpGet(link, localColor, cuisines.split(",").length);
 }
 
-function httpGet(url, givenColor)
+function httpGet(url, givenColor, cLength)
 {
     var target = document.getElementById('venn');
     spinner.spin(target);
@@ -239,14 +238,13 @@ function httpGet(url, givenColor)
         alert('CORS not supported');
         return;
     }
-    console.log(selectedLocation);
     // Response handlers.
     xhr.onload = function() {
         var text = xhr.responseText;
         jsonResponse = JSON.parse(text);
 
         if (jsonResponse != null)
-            drawCircleOnVenn(givenColor);
+            drawCircleOnVenn(givenColor, cLength);
 
     };
 
@@ -308,7 +306,7 @@ $('body').on('click', '.btn-group-horizontal button', function (e) {
                 this.style.background = "#84EC74";
                 singleAttrName = e.target.textContent.trim();
                 var link = "http://yelp-reco-dv.herokuapp.com/recommendOne?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + singleAttrName.toLowerCase();
-                httpGet(link, "#84EC74");
+                httpGet(link, "#84EC74", cuisines.split(",").length);
                 return;
             } else {
                 prevAttSelected.style.background = "#bdbdbd";
@@ -319,7 +317,7 @@ $('body').on('click', '.btn-group-horizontal button', function (e) {
                 bubObject.remove();
 
                 var link = "http://yelp-reco-dv.herokuapp.com/recommend?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + indexAttributes;
-                httpGet(link, "red");
+                httpGet(link, "red", cuisines.split(",").length);
             }
         } else {
             prevAttSelected.style.background = "#bdbdbd";
@@ -353,7 +351,7 @@ $('body').on('click', '.btn-group-horizontal button', function (e) {
         }
 
         var link = "http://yelp-reco-dv.herokuapp.com/recommendOne?location=" + selectedLocation + "&categories=" + cuisines + "&preferences=" + singleAttrName.toLowerCase();
-        httpGet(link, bgColor);
+        httpGet(link, bgColor, cuisines.split(",").length);
     }
 
 
