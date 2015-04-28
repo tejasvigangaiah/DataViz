@@ -1,4 +1,6 @@
 var vennSvg;
+var restaurantaddress;
+
 (function(venn) {
     venn.VennDiagram = function() {
         var width = 600,
@@ -1150,9 +1152,10 @@ function visualizeInformation(d) {
     donutRating(star1, star2, star3, star4, star5);
 
     var restaurantName = d.name;
-    var restaurantaddress = d.address;
-
-    document.getElementById("catList").innerHTML = "<p align='cener'><h2>" + restaurantName + "</h2><br> " + restaurantaddress + "<br><br><b>Stats:</b>" + d.stats + "</p>";
+    restaurantaddress = d.address;
+    var addressButton = "<a  target=\"_blank\" href='http://maps.google.co.in/maps?q=" + restaurantaddress + "'>" + restaurantaddress + "</a>";
+    //var addressButton = "<button type=\"button\" class=\"btn btn-primary btn-lg\" data-toggle=\"modal\" data-target=\"#myModal\" onclick='generateGooglemap()'>" + restaurantaddress + "</button>";
+    document.getElementById("catList").innerHTML = "<p align='cener'><h2>" + restaurantName + "</h2><br> " + addressButton + "<br><br><b>Stats:</b>" + d.stats + "</p>";
 }
 
 function getCxValue(d, i, jsonLength, cLength) {
